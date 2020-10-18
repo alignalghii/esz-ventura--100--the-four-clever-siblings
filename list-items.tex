@@ -1,0 +1,86 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{t1enc}
+\usepackage[magyar]{babel}
+\sloppy
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[only,lightning]{stmaryrd}
+\usepackage{halloweenmath}
+\usepackage{graphics}
+%\usepackage{MnSymbol}
+%\usepackage{arev}
+%\usepackage{bclogo}
+
+\newcommand{\nothing}{\text{\raisebox{0.4em}{\rotatebox{180}{$\curvearrowleft$}}}}%{\mathbf{nothing}}
+\newcommand{\just}[1]{\boxed{#1}}%{\mathbf{just}}
+\DeclareMathOperator{\dom}{\mathbf{Dom}}
+\newcommand{\incl}{\mathbf{incl}}
+\newcommand{\excl}{\mathbf{excl}}
+\newcommand{\parenthetical}[1]{\left(#1\right)}
+\newcommand{\angled}[1]{\left\langle#1\right\rangle}
+\newcommand{\mainfun}[3]{\mathwitch_{#1}^{#2}#3}
+\newcommand{\yesmainfun}[3]{\bigpumpkin_{#1}^{#2}#3}
+\newcommand{\nomainfun}[3]{\bigskull_{#1}^{#2}#3}
+\newcommand{\currymainfun}[1]{\mathwitch_{#1}}
+\newcommand{\storm}{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning\mspace{20mu}}
+
+\title{100. feladvány}
+\author{Endrey Márk}
+
+\begin{document}
+	\maketitle
+
+	\section{Bevezetés}
+
+	\begin{itemize}
+		\item 101: Ha 101 bárányt látsz, társad csakis 0-t láthat, és a ladbdát te biztos nem tőle, hanem a királytól kaptad. És ne is engedd át neki a labdát, hanem a királynak: azzonnal jelentsd be hogy a királylány a nyájban van.
+		\item 0: Ha   0 bárányt látsz, társad 101-et vagy 100-at láthat. Ha ő volt már, akkor biztos, hogy nem 101-et, ekkor jelents be, hogy a királylány elkóborolt. Ha ő nem volt még, engedd át neki a labdát. Ha 101 báránya van, tőled függetlenül be fogja jelenteni, hogy a királynő a nyájban van, de ha 100 báránya van, akkor  épp a te átengedésed tényéből fogja megtudni, hogy te 0 bárányt látsz, ő erre alapozva be fogja jelenteni, hogy a királylány ekóborolt.
+		\item 100: Ha 100 bárányt látsz, társad 0-t vagy 1-et láthat. Mindenképp engedd át számára a labdát (akár tőle, akár a királytól kaptad). Ha ő 0-t lát, be fogja jelenteni, hogy a királylány elkóborolt. Ha ő 1-et lát, vissza fogja neked dobni a labdát. Ekkor jelents be hogy a királylány a nyájban van.
+		\item 1: Ha 1 bárányt lász, társad 100-at vagy 99-et láthat. Engedd áát neki a labdát. ugyanis ha ő 100-at lát, kíváncsi lesz rá, hogy te 0-t vagy 1-et látsz-e, így vissza fogja dobni neked.
+	\end{itemize}
+
+	\section{Formalizmus}
+
+	\[\mainfun0{-\infty}5, \yesmainfun0{-\infty}5, \nomainfun0{-\infty}5\]
+
+	\begin{align*}
+		\mainfun0{-\infty}0 &= \nothing \\
+		\mainfun0{-\infty}1 &= \nothing \\
+		\mainfun0{-\infty}2 &= \nothing \\
+		\mainfun0{-\infty}3 &= \nothing \\
+		\mainfun0{-\infty}4 &= \nothing \\
+		\mainfun0{-\infty}5 &= \nothing
+	\end{align*}
+
+	\begin{align*}
+		\mainfun0{0}0  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}4 = \nothing\\\mainfun2{-\infty}5 = \nothing&\end{cases} \\
+		\mainfun0{0}1  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}3 = \nothing\\\mainfun2{-\infty}4 = \nothing&\end{cases} \\
+		\mainfun0{0}2  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}2 = \nothing\\\mainfun2{-\infty}3 = \nothing&\end{cases} \\
+		\mainfun0{0}3  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}1 = \nothing\\\mainfun2{-\infty}2 = \nothing&\end{cases} \\
+		\mainfun0{0}4  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}0 = \nothing\\\mainfun2{-\infty}1 = \nothing&\end{cases} \\
+		\mainfun0{0}5  &= \just \incl \text{, mert }\begin{cases}\mainfun2{-\infty}0 = \nothing&\text{--- tehát egyértelmű: csak egy eset van}\end{cases}
+	\end{align*}
+
+	\begin{align*}
+		\mainfun0{\frac12}0  &= \just \excl \text{, mert }\begin{cases}\mainfun2{0}4 = \nothing\\\mainfun2{0}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
+		\mainfun0{\frac12}1  &= \nothing    \text{, mert }\begin{cases}\mainfun2{0}3 = \nothing\\\mainfun2{0}4 = \nothing&\end{cases} \\
+		\mainfun0{\frac12}2  &= \nothing    \text{, mert }\begin{cases}\mainfun2{0}2 = \nothing\\\mainfun2{0}3 = \nothing&\end{cases} \\
+		\mainfun0{\frac12}3  &= \nothing    \text{, mert }\begin{cases}\mainfun2{0}1 = \nothing\\\mainfun2{0}2 = \nothing&\end{cases} \\
+		\mainfun0{\frac12}4  &= \nothing    \text{, mert }\begin{cases}\mainfun2{0}0 = \nothing\\\mainfun2{0}1 = \nothing&\end{cases} \\
+		\mainfun0{\frac12}5  &= \just \incl \text{, mert }\begin{cases}\mainfun2{0}0 = \nothing&\text{--- az egyetlen eset el is jut hozzá: $\angled{\frac12,5}\in\dom\currymainfun0$, azaz $\yesmainfun0{\frac12}5$}\end{cases}
+	\end{align*}
+
+	\begin{align*}
+		\mainfun010  &= \just \excl \text{, mert }\begin{cases}\mainfun2{\frac12}4 = \nothing\\\mainfun2{\frac12}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
+		\mainfun011  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}3 = \nothing\\\mainfun2{\frac12}4 = \nothing&\end{cases} \\
+		\mainfun012  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}2 = \nothing\\\mainfun2{\frac12}3 = \nothing&\end{cases} \\
+		\mainfun013  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}1 = \nothing\\\mainfun2{\frac12}2 = \nothing&\end{cases} \\
+		\mainfun014  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl\\\mainfun2{\frac12}1 = \nothing&\end{cases} \\%\intertext{\[\storm\]}
+		\nomainfun015 & \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{1,5}\notin\dom \currymainfun0$}\end{cases}
+		\intertext{\vspace{-1em}\[\storm\storm\storm\storm\storm\storm\]}
+		%{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning}\mspace{20mu}\nexists\mainfun015\bigskull\bigskull  & \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{\frac12,5}\notin\dom P_0$}\end{cases}
+	\end{align*}
+\end{document}
