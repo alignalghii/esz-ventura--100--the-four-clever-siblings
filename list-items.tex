@@ -10,6 +10,7 @@
 \usepackage[only,lightning]{stmaryrd}
 \usepackage{halloweenmath}
 \usepackage{graphics}
+\usepackage{here}
 %\usepackage{MnSymbol}
 %\usepackage{arev}
 %\usepackage{bclogo}
@@ -43,6 +44,8 @@
 	\end{itemize}
 
 	\section{Formalizmus}
+
+	A kommunikáció nyelvtana: a \emph{protokollfüggvény}. A $\mainfun0{-\infty}5$ függvényt úgy fogjuk felépíteni, hogy \emph{jóslóerejű} legyen: egyáltalán ($+\infty$), sőt a megadott korlátokon belül is ($2\frac12, 2, 1\frac12, 1, \frac12, 0, -\infty$). Értelmezési tartományát az $\yesmainfun0{-\infty}5$ \emph{élőségi predikátum} határolja be, ennek ellentéte, logikai negáltja a $\nomainfun0{-\infty}5$ \emph{lehetetlenségi predikátum}. Értékkészlete Maybe-algebrájú: $\nothing$ mint továbbengedés, vagy azonnali válasz $\just\incl$ és $\just\excl$ lehetőséggel. A protokollfüggvény tulajdonsága, hogy tagjaira szimmetrikus ($0, 1, 2, 3,4$) és rekurziója egyfajta komplementaritásra, illetve annak indeterminizmusára, ,,holtjátékára'' épül ($0 \mapsto 4, 5 \bullet \dots \bullet 4 \mapsto 0, 1$).
 
 	\[\mainfun0{-\infty}5, \yesmainfun0{-\infty}5, \nomainfun0{-\infty}5\]
 
@@ -83,4 +86,24 @@
 		\intertext{\vspace{-1em}\[\storm\storm\storm\storm\storm\storm\]}
 		%{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning}\mspace{20mu}\nexists\mainfun015\bigskull\bigskull  & \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{\frac12,5}\notin\dom P_0$}\end{cases}
 	\end{align*}
+
+	\subsection{Táblázat}
+
+	\begin{table*}
+		\caption{TODO: pont a transzponáltja kell!}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$-\infty$	&	$0$	&	$\frac12$	&	$1$	&	$1\frac12$	&	$2$	&	$2\frac12$\\\hline\hline
+			$0$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
+			$1$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
+			$2$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
+			$3$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
+			$4$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
+			$5$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
+		\end{tabular}
+	\end{table*}
+
+	\subsection{Rekurziós gráf}
+
+	\section{Tesztelő keretrendszer aktorszereposztása}
 \end{document}
