@@ -11,6 +11,7 @@
 \usepackage{halloweenmath}
 \usepackage{graphics}
 \usepackage{here}
+\usepackage{caption}
 %\usepackage{MnSymbol}
 %\usepackage{arev}
 %\usepackage{bclogo}
@@ -81,7 +82,7 @@
 		\mainfun011  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}3 = \nothing\\\mainfun2{\frac12}4 = \nothing&\end{cases} \\
 		\mainfun012  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}2 = \nothing\\\mainfun2{\frac12}3 = \nothing&\end{cases} \\
 		\mainfun013  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}1 = \nothing\\\mainfun2{\frac12}2 = \nothing&\end{cases} \\
-		\mainfun014  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl\\\mainfun2{\frac12}1 = \nothing&\end{cases} \\%\intertext{\[\storm\]}
+		\mainfun014  &= \just\incl  \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl\\\mainfun2{\frac12}1 = \nothing&\text{--- nem jut el hozzá}\end{cases} \\%\intertext{\[\storm\]}
 		\nomainfun015 & \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{1,5}\notin\dom \currymainfun0$}\end{cases}
 		\intertext{\vspace{-1em}\[\storm\storm\storm\storm\storm\storm\]}
 		%{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning}\mspace{20mu}\nexists\mainfun015\bigskull\bigskull  & \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{\frac12,5}\notin\dom P_0$}\end{cases}
@@ -89,21 +90,33 @@
 
 	\subsection{Táblázat}
 
-	\begin{table*}
-		\caption{TODO: pont a transzponáltja kell!}
+	\begin{table}[H]
+		\caption*{$\currymainfun0$ táblázata, de a legalsó indextől fügetlen igazából}
 		\centering
 		\begin{tabular}{c||c|c|c|c|c|c|c|}
-				&	$-\infty$	&	$0$	&	$\frac12$	&	$1$	&	$1\frac12$	&	$2$	&	$2\frac12$\\\hline\hline
-			$0$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
-			$1$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
-			$2$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
-			$3$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
-			$4$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
-			$5$	&	&\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing\\\hline
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\just\incl	\\\hline
+		$\frac12$	&	\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\just\incl	\\\hline
+			$1$	&	\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\just\incl	&			\\\hline
+		$1\frac12$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$2$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+		$2\frac12$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$3$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+		$3\frac12$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$4$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+		$4\frac12$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$5$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
 		\end{tabular}
-	\end{table*}
+	\end{table}
 
 	\subsection{Rekurziós gráf}
 
+	Szintezettség, hasonló a táblázathoz, de az indeterminisztikus komplementaritás miatt az élek kuszák a szintek között.
+
 	\section{Tesztelő keretrendszer aktorszereposztása}
+
+	Van a négy azonos típusú és viselkedésű aktor, akik közös protokollfügyvény szerint viselkednek, és van a király mint egy magasabb szinten vett másik fél.
+
+	Érdekesség még, hogy a négy testvéraktor esetében is valójában a szembelevők közt zajlik az érdemi kommunikáció. Lehet, hogy létezik optimálisabb protokoll is (amely nem egyszerűűsíti le a négy testvérktort kettőre, és ezt kihasználva hatékonyabb), de a protokoll optimalitása nem feladat, csak a korlátokon belül maradása.
 \end{document}
