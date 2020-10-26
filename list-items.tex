@@ -15,6 +15,11 @@
 %\usepackage{MnSymbol}
 %\usepackage{arev}
 %\usepackage{bclogo}
+\usepackage[table]{xcolor}
+\newcommand{\blk}{\cellcolor{darkgray}}
+\newcommand{\gry}{\cellcolor{lightgray}}
+\newcommand{\red}{\cellcolor{red!33}}
+\newcommand{\grn}{\cellcolor{green!33}}
 
 \newcommand{\nothing}{\text{\raisebox{0.4em}{\rotatebox{180}{$\curvearrowleft$}}}}%{\mathbf{nothing}}
 \newcommand{\just}[1]{\boxed{#1}}%{\mathbf{just}}
@@ -23,11 +28,22 @@
 \newcommand{\excl}{\mathbf{excl}}
 \newcommand{\parenthetical}[1]{\left(#1\right)}
 \newcommand{\angled}[1]{\left\langle#1\right\rangle}
+
 \newcommand{\mainfun}[3]{\mathwitch_{#1}^{#2}#3}
 \newcommand{\yesmainfun}[3]{\bigpumpkin_{#1}^{#2}#3}
 \newcommand{\nomainfun}[3]{\bigskull_{#1}^{#2}#3}
 \newcommand{\currymainfun}[1]{\mathwitch_{#1}}
+
+\newcommand{\mainfunabs}[3]{\overbat{\mathwitch*_{#1}^{#2}#3}}
+\newcommand{\yesmainfunabs}[3]{\overbat{\bigpumpkin_{#1}^{#2}#3}}
+\newcommand{\nomainfunabs}[3]{\overbat{\bigskull_{#1}^{#2}#3}}
+\newcommand{\currymainfunabs}[1]{\overbat{\mathwitch*_{#1}}}
+
 \newcommand{\storm}{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning\mspace{20mu}}
+
+\newcommand{\progr}[1]{\left|#1\right|}
+
+\setcounter{tocdepth}4
 
 \title{100. feladvány}
 \author{Endrey Márk}
@@ -35,7 +51,13 @@
 \begin{document}
 	\maketitle
 
+	\tableofcontents
+
 	\section{Bevezetés}
+
+	\subsection{Tudatemlélettel rendelkező aktorok}
+
+	\subsubsection{,,Tudom, hogy tudod, hogy tudom, hogy tudod\dots''}
 
 	\begin{itemize}
 		\item 101: Ha 101 bárányt látsz, társad csakis 0-t láthat, és a ladbdát te biztos nem tőle, hanem a királytól kaptad. És ne is engedd át neki a labdát, hanem a királynak: azzonnal jelentsd be hogy a királylány a nyájban van.
@@ -43,6 +65,40 @@
 		\item 100: Ha 100 bárányt látsz, társad 0-t vagy 1-et láthat. Mindenképp engedd át számára a labdát (akár tőle, akár a királytól kaptad). Ha ő 0-t lát, be fogja jelenteni, hogy a királylány elkóborolt. Ha ő 1-et lát, vissza fogja neked dobni a labdát. Ekkor jelents be hogy a királylány a nyájban van.
 		\item 1: Ha 1 bárányt lász, társad 100-at vagy 99-et láthat. Engedd áát neki a labdát. ugyanis ha ő 100-at lát, kíváncsi lesz rá, hogy te 0-t vagy 1-et látsz-e, így vissza fogja dobni neked.
 	\end{itemize}
+
+	\section{Egyszerűbb feladat kitűzéseTapasztalatgyűjtés céljából --- Felmerülő redukciós szempontok, ötletek}
+
+
+	\begin{itemize}
+		\item Csökkentjük a ,,kör'' méretét (4 helyett 3)
+		\item Csökkentjük a birkák számát ($100 + 1$ helyett $4 +1$, ahol végső esetben megegyezik a kör méretével. Bár ez is nehéz, de ez már plauzibilis kihívás, jobban el tudi indulni az ember, főleg, hogy még további egérút is van: $3 +1$, $2 + 1$, $1 + 1$, és végső egyszerűsítésképp $0 + 1$, ami a lehetséges elképzelhető minimum.
+	\end{itemize}
+
+	\subsection{Körredukció}
+
+
+	Meglepő módon a ,,4 helyett 3'' viszont egyelőre nem tűnik számomra tapasztatszerzsés szempontjából  előrelépésnek, redukció szempontjából meg  visszalépésnek: a 3-as eset akár még bonyolultabb is lehet következtetéek szempontjából. Egyfajta ,,4 helyett 2''-ról ugyan lehet beszélni, de az a ,,$100 + 1$ helyett'' megközelítésből adódik nagyon szerves, arra külön jellemző okokból.
+
+	A továbbiakban nagyrészt e létszámredukció lesz érvényben az írás folyamán, és az általánosítások is e mentén történnek.
+	A végén talán még visszatérünk a körredukciós, és főleg a köráltalánosítási kérdésekre is.
+
+	\subsection{Létszámredukció}
+
+	A $100 + 1$ helyett $4 + 1$ redukció lesz érvényes az írás nagy részében, mindenütt, ahol értelemszerűen látszik (mindenütt, ahol a 4-esek és 5-ösök szerepe kitüntetettként szerepel).
+
+	\subsection{A redukció redukciója: elő-előtanumányok}
+
+	\subsubsection{$4 + 1$ helyett $0 +1$}
+	\subsubsection{$4 + 1$ helyett $1 +1$}
+	\subsubsection{$4 + 1$ helyett $2 +1$}
+	\subsubsection{$4 + 1$ helyett $3 +1$}
+
+
+	\section{A párkommunikáció-elvonatkoztatás}
+
+	\subsection{Repeater-szabályok}
+
+	Egy későbbi formalizmust előrebocsátva, ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfun0jn = \nothing$, és $\nomainfun1jn$ ha $\nomainfun0jn \lor \mainfun0jn = \just\incl \lor \mainfun0jn = \just\excl$.
 
 	\section{Formalizmus}
 
@@ -60,55 +116,183 @@
 	\end{align*}
 
 	\begin{align*}
-		\mainfun0{0}0  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}4 = \nothing\\\mainfun2{-\infty}5 = \nothing&\end{cases} \\
-		\mainfun0{0}1  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}3 = \nothing\\\mainfun2{-\infty}4 = \nothing&\end{cases} \\
-		\mainfun0{0}2  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}2 = \nothing\\\mainfun2{-\infty}3 = \nothing&\end{cases} \\
-		\mainfun0{0}3  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}1 = \nothing\\\mainfun2{-\infty}2 = \nothing&\end{cases} \\
-		\mainfun0{0}4  &= \nothing    \text{, mert }\begin{cases}\mainfun2{-\infty}0 = \nothing\\\mainfun2{-\infty}1 = \nothing&\end{cases} \\
-		\mainfun0{0}5  &= \just \incl \text{, mert }\begin{cases}\mainfun2{-\infty}0 = \nothing&\text{--- tehát egyértelmű: csak egy eset van}\end{cases}
+		\mainfun0{0}0  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}4 = \nothing\\\mainfun2{-\infty}5 = \nothing&\end{cases} \\
+		\mainfun0{0}1  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}3 = \nothing\\\mainfun2{-\infty}4 = \nothing&\end{cases} \\
+		\mainfun0{0}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}2 = \nothing\\\mainfun2{-\infty}3 = \nothing&\end{cases} \\
+		\mainfun0{0}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}1 = \nothing\\\mainfun2{-\infty}2 = \nothing&\end{cases} \\
+		\mainfun0{0}4  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}0 = \nothing\\\mainfun2{-\infty}1 = \nothing&\end{cases} \\
+		\mainfun0{0}5  &= \just \incl &&\text{, mert }\begin{cases}\mainfun2{-\infty}0 = \nothing&\text{--- tehát egyértelmű: csak egy eset van}\end{cases}
 	\end{align*}
 
 	\begin{align*}
-		\mainfun0{\frac12}0  &= \just \excl \text{, mert }\begin{cases}\mainfun2{0}4 = \nothing\\\mainfun2{0}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
-		\mainfun0{\frac12}1  &= \nothing    \text{, mert }\begin{cases}\mainfun2{0}3 = \nothing\\\mainfun2{0}4 = \nothing&\end{cases} \\
-		\mainfun0{\frac12}2  &= \nothing    \text{, mert }\begin{cases}\mainfun2{0}2 = \nothing\\\mainfun2{0}3 = \nothing&\end{cases} \\
-		\mainfun0{\frac12}3  &= \nothing    \text{, mert }\begin{cases}\mainfun2{0}1 = \nothing\\\mainfun2{0}2 = \nothing&\end{cases} \\
-		\mainfun0{\frac12}4  &= \nothing    \text{, mert }\begin{cases}\mainfun2{0}0 = \nothing\\\mainfun2{0}1 = \nothing&\end{cases} \\
-		\mainfun0{\frac12}5  &= \just \incl \text{, mert }\begin{cases}\mainfun2{0}0 = \nothing&\text{--- az egyetlen eset el is jut hozzá: $\angled{\frac12,5}\in\dom\currymainfun0$, azaz $\yesmainfun0{\frac12}5$}\end{cases}
+		\mainfun0{\frac12}0  &= \just \excl &&\text{, mert }\begin{cases}\mainfun2{0}4 = \nothing\\\mainfun2{0}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
+		\mainfun0{\frac12}1  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{0}3 = \nothing\\\mainfun2{0}4 = \nothing&\end{cases} \\
+		\mainfun0{\frac12}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{0}2 = \nothing\\\mainfun2{0}3 = \nothing&\end{cases} \\
+		\mainfun0{\frac12}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{0}1 = \nothing\\\mainfun2{0}2 = \nothing&\end{cases} \\
+		\mainfun0{\frac12}4  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{0}0 = \nothing\\\mainfun2{0}1 = \nothing&\end{cases} \\
+		\mainfun0{\frac12}5  &= \just \incl &&\text{, mert }\begin{cases}\mainfun2{0}0 = \nothing&\text{--- az egyetlen eset el is jut hozzá: $\angled{\frac12,5}\in\dom\currymainfun0$, azaz $\yesmainfun0{\frac12}5$}\end{cases}
 	\end{align*}
 
 	\begin{align*}
-		\mainfun010  &= \just \excl \text{, mert }\begin{cases}\mainfun2{\frac12}4 = \nothing\\\mainfun2{\frac12}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
-		\mainfun011  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}3 = \nothing\\\mainfun2{\frac12}4 = \nothing&\end{cases} \\
-		\mainfun012  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}2 = \nothing\\\mainfun2{\frac12}3 = \nothing&\end{cases} \\
-		\mainfun013  &= \nothing    \text{, mert }\begin{cases}\mainfun2{\frac12}1 = \nothing\\\mainfun2{\frac12}2 = \nothing&\end{cases} \\
-		\mainfun014  &= \just\incl  \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl\\\mainfun2{\frac12}1 = \nothing&\text{--- nem jut el hozzá}\end{cases} \\%\intertext{\[\storm\]}
-		\nomainfun015 & \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{1,5}\notin\dom \currymainfun0$}\end{cases}
+		\mainfun010  &= \just \excl &&\text{, mert }\begin{cases}\mainfun2{\frac12}4 = \nothing\\\mainfun2{\frac12}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
+		\mainfun011  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{\frac12}3 = \nothing\\\mainfun2{\frac12}4 = \nothing&\end{cases} \\
+		\mainfun012  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{\frac12}2 = \nothing\\\mainfun2{\frac12}3 = \nothing&\end{cases} \\
+		\mainfun013  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{\frac12}1 = \nothing\\\mainfun2{\frac12}2 = \nothing&\end{cases} \\
+		\mainfun014  &= \just\incl  &&\text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl\\\mainfun2{\frac12}1 = \nothing&\text{--- nem jut el hozzá}\end{cases} \\%\intertext{\[\storm\]}
+		&\nomainfun015              &&\text{, mert}_{\frac12}\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{1,5}\notin\dom \currymainfun0$}\end{cases}\\
+		&                           &&\text{, mert}_1\mainfun005 = \just\incl\text{ --- alternatív bizonyítás}\\
+		&                           &&\text{\hspace{7em}mostantól külön szabály}_1 \text{ az eddigi szabály}_\frac12 \text{mellé}\\
 		\intertext{\vspace{-1em}\[\storm\storm\storm\storm\storm\storm\]}
 		%{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning}\mspace{20mu}\nexists\mainfun015\bigskull\bigskull  & \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{\frac12,5}\notin\dom P_0$}\end{cases}
 	\end{align*}
 
-	\subsection{Táblázat}
+	\begin{align*}
+		&\nomainfun0{1\frac12}0              &&\text{, mert}_{\frac12}\begin{cases}\mainfun214 = \just\incl&\text{--- innen már nem juthat el hozzá}\\\nomainfun215&\text{--- ez meg már nincs is a lehetőségek között}\end{cases} \\
+		&                                    &&\text{, mert}_1\mainfun0{\frac12}0 = \just\excl\\
+		\mainfun0{1\frac12}1  &= \just\excl  &&\text{, mert }\begin{cases}\mainfun213 = \nothing\\\mainfun214 = \just\incl&\text{--- innen nem juthat tovább}\end{cases} \\
+		\mainfun0{1\frac12}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfun212 = \nothing\\\mainfun213 = \nothing&\end{cases} \\
+		\mainfun0{1\frac12}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfun211 = \nothing\\\mainfun212 = \nothing&\end{cases} \\
+		\mainfun0{1\frac12}4  &= \just\incl  &&\text{, mert }\begin{cases}\mainfun210 = \just\excl&\text{--- nem jut el hozzá}\\\mainfun211 = \nothing&\end{cases} \\%\intertext{\[\storm\]}
+		&\nomainfun0{1\frac12}5              &&\text{, mert}_{\frac12}\begin{cases}\mainfun210 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
+		&                                    &&\text{, mert}_1 \mainfun0{\frac12}5 = \just\incl
+	\end{align*}
+
+	\begin{align*}
+		&\nomainfun020               &&\text{, mert}_\frac12\begin{cases}\mainfun2{1\frac12}4=\just\incl\\\nomainfun2{1\frac12}5\end{cases}\\
+		&                            &&\text{, mert}_1\mainfun010=\just\excl\\
+		\mainfun021   &= \just\excl  &&\text{, mert }\begin{cases}\mainfun2{1\frac12}3 = \nothing\\\mainfun2{1\frac12}4 = \just\incl&\text{--- innen nem juthat tovább}\end{cases}\\
+		\mainfun022   &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{1\frac12}2 = \nothing\\\mainfun2{1\frac12}3 = \nothing&\end{cases}\\
+		\mainfun023   &= \just\incl  &&\text{, mert }\begin{cases}\mainfun2{1\frac12}1 = \just\excl\\\mainfun2{1\frac12}2 = \nothing&\end{cases}\\
+		&\nomainfun024               &&\text{, mert}_\frac12\begin{cases}\nomainfun2{1\frac12}0\\\mainfun2{1\frac12}1 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
+		&                            &&\text{, mert}_1\mainfun014=\just\incl\text{ --- nem jut el hozzá}\\
+		&\nomainfun025               &&\text{, mert}_\frac12\begin{cases}\nomainfun2{1\frac12}0\end{cases}\\
+		&                            &&\text{, mert}_1\nomainfun015
+	\end{align*}
+
+	\begin{align*}
+		&\nomainfun0{2\frac12}0               &&\text{, mert}_\frac12\begin{cases}\nomainfun224\\\nomainfun225\end{cases}\\
+		&                                     &&\text{, mert}_1\nomainfun0{1\frac12}0\\
+		&\nomainfun0{2\frac12}1               &&\text{, mert}_\frac12\begin{cases}\mainfun223 = \just\incl&\text{--- innen nem juthat tovább}\\\nomainfun224\end{cases}\\
+		&                                     &&\text{, mert}_1\mainfun0{1\frac12}1 = \just\excl\\
+		\mainfun0{2\frac12}2   &= \just\excl  &&\text{, mert }\begin{cases}\mainfun222 = \nothing\\\mainfun223 = \just\incl&\text{--- innen nem juthat tovább}\end{cases}\\
+		\mainfun0{2\frac12}3   &= \just\incl  &&\text{, mert }\begin{cases}\mainfun221 = \just\excl&\text{--- innen nem juthat tovább}\\\mainfun222 = \nothing&\end{cases}\\
+		&\nomainfun0{2\frac12}4               &&\text{, mert}_\frac12\begin{cases}\nomainfun220\\\mainfun221 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
+		&                                     &&\text{, mert}_1\mainfun0{1\frac12}4=\just\incl\text{ --- nem jut el hozzá}\\
+		&\nomainfun0{2\frac12}5               &&\text{, mert}_\frac12\begin{cases}\nomainfun220\end{cases}\\
+		&                                     &&\text{, mert}_1\nomainfun0{1\frac12}5
+	\end{align*}
+
+	\begin{align*}
+		&\nomainfun030   &&\text{, mert}_\frac12\begin{cases}\nomainfun2{2\frac12}4\\\nomainfun2{2\frac12}5\end{cases}\\
+		&                &&\text{, mert}_1\nomainfun020\\
+		&\nomainfun031   &&\text{, mert}_\frac12\begin{cases}\mainfun2{2\frac12}3 = \just\incl&\text{--- innen nem juthat tovább}\\\nomainfun2{2\frac12}4\end{cases}\\
+		&                &&\text{, mert}_1\mainfun021 = \just\excl\\
+		&\nomainfun032   &&\text{, mert }\begin{cases}\mainfun2{2\frac12}2 = \just\excl&\text{--- innen nem juthat tovább}\\\mainfun2{2\frac12}3 = \just\incl&\text{--- innen sem juthat tovább}\end{cases}\\
+		&\nomainfun033   &&\text{, mert }\begin{cases}\nomainfun2{2\frac12}1\\\mainfun2{2\frac12}2 = \just\excl&\end{cases}\\
+		&\nomainfun034   &&\text{, mert}_\frac12\begin{cases}\nomainfun2{2\frac12}0\\\nomainfun2{2\frac12}1\end{cases}\\
+		&                &&\text{, mert}_1\nomainfun024\\
+		&\nomainfun035   &&\text{, mert}_\frac12\begin{cases}\nomainfun2{2\frac12}0\end{cases}\\
+		&                &&\text{, mert}_1\nomainfun025
+	\end{align*}
+
+	\section{Táblázatok}
+
+	\subsection{Relatív táblák}
+
+	\subsubsection{Az elvonatkoztatott model fő kommunikációs felei}
 
 	\begin{table}[H]
-		\caption*{$\currymainfun0$ táblázata, de a legalsó indextől fügetlen igazából}
+		\caption*{$\currymainfun0$ és $\currymainfun2$ relatív táblázata: a 0-s és a 2-es testvér szerepe szimmetrikus a relatív reprezentációban}
 		\centering
 		\begin{tabular}{c||c|c|c|c|c|c|c|}
 				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
 		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\just\incl	\\\hline
-		$\frac12$	&	\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\just\incl	\\\hline
-			$1$	&	\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\just\incl	&			\\\hline
-		$1\frac12$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-			$2$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-		$2\frac12$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-			$3$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-		$3\frac12$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-			$4$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-		$4\frac12$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-			$5$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
 		\end{tabular}
 	\end{table}
+
+	\subsection{A párkommunikáció-elvonatkoztatásból való visszalépés}
+
+	A másik két testvér táblázatának kitöltésen nehezebb, hiszen a fentebbi modellek lényegében két kommunikáló félre redukálják a sémát.
+	Az \#1 és \#3 indexű testvér lényegében csak afféle ,,vezeték'' ebben,hogy ez a fajta absztrakció ehetővé váljék, szerepük implicit.
+	Mindenesetre ettől függetlenül nekik is konrét táblát kell adni, sőt, nemcsak az abszolút, hanem már itt a relatív tábla terén is is.
+
+	A ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfun0jn = \nothing$, és $\nomainfun1jn$ ha $\nomainfun0jn \lor \mainfun0jn = \just\incl \lor \mainfun0jn = \just\excl$.
+
+	\subsection{Abszolút táblák}
+
+	\subsubsection{Az elvonatkoztatott model fő kommunikációs felei}
+
+	\begin{table}[H]
+		\caption*{$\currymainfunabs0$ abszolút táblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\caption*{$\currymainfunabs2$ abszolút táblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$0$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$1$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$2$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
+
+	\paragraph{Egy teljes alternatív kiépítése az egésznek}
+	A tábla szimmetriája miatt az egész feladat tárgyalását fel lehetne építeni matematikailag is és didaktikailag is úgy, hogy eleve  ezt a táblázatot ismerjük fel (létezik hétköznapi foglamakkal megadható leírás és rávezetés).
+
+	\subsection{A párkommunikáció-elvonatkoztatásból való visszalépés}
+
+	\subsubsection{A kimaradt abszolút és relatív táblák}
+
+	\begin{table}[H]
+		\caption*{$\currymainfun1$ relatív táblázata}
+		\centering
+	\end{table}
+
+	\begin{table}[H]
+		\caption*{$\currymainfun3$ relatív táblázata}
+		\centering
+	\end{table}
+
+	\begin{table}[H]
+		\caption*{$\currymainfunabs1$ abszolút táblázata}
+		\centering
+	\end{table}
+
+	\begin{table}[H]
+		\caption*{$\currymainfunabs3$ abszolút táblázata}
+		\centering
+	\end{table}
+
+	\section{Egyéb kísérleti fogalmak bölcseje}
+
+	\subsection{Progressziós/előrehaladottsági érték}
+	\begin{displaymath}
+		\progr{\text{fehér}} < \progr{\text{színes}} < \progr{\text{fekete}}
+	\end{displaymath}
+	vagyis
+	\begin{align*}
+		\progr{\mathwitch=\nothing} < &\progr{\mathwitch=\just\incl} < \progr{\bigskull}\\
+		                            < &\progr{\mathwitch=\just\excl} <
+	\end{align*}
+	\subsection{Szabályok}
 
 	\subsection{Rekurziós gráf}
 
@@ -119,4 +303,22 @@
 	Van a négy azonos típusú és viselkedésű aktor, akik közös protokollfügyvény szerint viselkednek, és van a király mint egy magasabb szinten vett másik fél.
 
 	Érdekesség még, hogy a négy testvéraktor esetében is valójában a szembelevők közt zajlik az érdemi kommunikáció. Lehet, hogy létezik optimálisabb protokoll is (amely nem egyszerűűsíti le a négy testvérktort kettőre, és ezt kihasználva hatékonyabb), de a protokoll optimalitása nem feladat, csak a korlátokon belül maradása.
+
+	\section{Hálózati alkalmazások, játékok}
+
+	Az 1-játékosú játék, még szoliternek sem nevezhető, hiszen itt az egyetlen játékos szerepét a gép játssza, külső játékos (felhasználó) nincs is. Webalkalmazásképp nem is interaktivitási okokból érdemes megcsinálni, legfeljebb adott paraméterezésű (pl.~100-birkás, 50-50-50-50-partíciós) játék stratégiáinak teszteléseként.
+
+	A 2-játékosú játék már érdekes, itt van egy külső játékos: vagy a király, vagy a testvérnégyes. Itt azonban didaktikai és játékfejlesztési jelentősége egy szereposztás-megválasztható webalkalmazásnak van. A felhasználó először a testvérnégyes szerepét játszva mérközik a királlyal (a géppel). Ebből tanulva, gyakorolva felfedezve láthat neki a fordított szereposztásnak.
+
+	A 3, 4, 5 játékosú játékok szzimetrikusan: a testvrnégyest bontjuk fel. A 6-játékosú játék teljsen fölvan bontva. Mikroszervizek szempontjából lehetnek érdekesek.
+
+	Érdekesek lehetnek olyan játékok, ahol ugyan több gépi vagy több emberi játékos is van, de ezek mikroszervizesen, hálózati úton tartják a kapcsolatot. Midenesetre programozás gyakorlása szempontjából érdekes, játék szempontjából még nem látom hasznukat, bár lehet hogy van ilyen. Didakitukailag érdekes lehet, hogy több gyerek játszhat egyszerre, pl. a néhy testvér szerepében rendre, esetleg közülük kettőt vagy hármat vagy mind a négyet ,,tömbösítve''.
+
+	Olyan játék, ahol a birkák összlétszámát, vagy a kör méretét a játékos nem is tudja, és neki kell kitalálnia (esetleg több élet engedélyezésével?) Van-e ilyen?
+
+	A továbbiakban a kétjátékosú játék, és a szereposztásmegválasztható webalkalmazás fejlesztéséről lesz szó.
+
+	\section{Általánosítások}
+
+	Köráltalánosítás? (A körredukció mintáájára). Létszámáltalánosítás, illetveennek részeként partícióáltalánosítás? A király egyéb feltételei (tudjuk a látszámot, tudjuk a kör méretét, a király szigorúsága, a meggengedett körök száma).
 \end{document}
