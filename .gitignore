@@ -3,3 +3,7 @@
 *.dvi
 *.pdf
 *.toc
+
+*.hi
+*.o
+Main
