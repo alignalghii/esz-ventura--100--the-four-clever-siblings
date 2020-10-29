@@ -66,7 +66,7 @@
 		\item 1: Ha 1 bárányt lász, társad 100-at vagy 99-et láthat. Engedd áát neki a labdát. ugyanis ha ő 100-at lát, kíváncsi lesz rá, hogy te 0-t vagy 1-et látsz-e, így vissza fogja dobni neked.
 	\end{itemize}
 
-	\section{Egyszerűbb feladat kitűzéseTapasztalatgyűjtés céljából --- Felmerülő redukciós szempontok, ötletek}
+	\section{Egyszerűbb feladat kitűzése tapasztalatgyűjtés céljából --- Felmerülő redukciós szempontok, ötletek}
 
 
 	\begin{itemize}
@@ -199,6 +199,18 @@
 
 	\subsection{Relatív táblák}
 
+	Alap (,,feles'') relatív tábla, (negyedekre) kiterjesztett relatív tábla, (egészekre) leszűkített relatív tábla. Alternatív jelölésrendszerek rájuk:
+	\begin{table}[H]
+		\caption*{Relatív táblák változatai részletezés szerint,\\és szóbajövő jelölési alternatívák}
+		\centering
+		\begin{tabular}{c|ccc}
+			             &  Alap                             &  Kiterjesztett                     &  Leszűkített\\\hline\hline
+			Jelölés I    &  $\currymainfun{}$                &  $\uparrow\!\!\!\currymainfun{}$       &  $\downarrow\!\!\!\currymainfun{}$\\\hline
+			Jelölés II   &  $\currymainfun{}$                &  ${}^{\mathghost}\!\!\!\currymainfun{}$  &  ${}_{\mathghost}\!\currymainfun{}$\\\hline
+			Jelölés III  &  ${}_{\frac12}\!\!\currymainfun{}$  &  ${}_{\frac14}\!\!\currymainfun{}$   &  ${}_1\!\!\currymainfun{}$
+		\end{tabular}
+	\end{table}
+
 	\subsubsection{Az elvonatkoztatott model fő kommunikációs felei}
 
 	\begin{table}[H]
@@ -225,6 +237,36 @@
 	Mindenesetre ettől függetlenül nekik is konrét táblát kell adni, sőt, nemcsak az abszolút, hanem már itt a relatív tábla terén is is.
 
 	A ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfun0jn = \nothing$, és $\nomainfun1jn$ ha $\nomainfun0jn \lor \mainfun0jn = \just\incl \lor \mainfun0jn = \just\excl$.
+
+	\subsubsection{A kiterjesztett relatív tábla}
+
+	Jelölésben a macskás boszorkány. Elvileg a Dom (tök és koponya)-függvényeknek is van kiterjesztett változata.
+
+	\subsubsection{Az autonómia tétele és az optimalitás tétele}
+
+	Az autónómia téetle aztmondja ki, hog az 1-es és 3-as legénynek nem kell kólon \texttt{const Nothing} jellegű szabályokat előírnunk.
+	Dolgozhatnak ugyanazzal a semeatikával, mint a 0-s és 2-es legény. Persze a konrét forgatókönyvekben vanóba afféle \texttt{const Nothing} repeater jellegű szerep hárul rájuk,
+	de ez automatikusan áll elŐ: egyszerűen abból fakad. hogy az ő információjuk előrehaladottsgi foka kisebb, mint az éppen érdeklődés alaptt álló legényé, így a rekurziók során ténylegesen előhívásra kerülő helyzetekben ők tényleg Nothingot nyújtnak a számára.
+
+	Az optimalitás tétele hasonló jellegű. Attól még hogy bebizonosodik, hogy az itt tárgyalt sematika tud jó válaszokat asni a kiránynak a keretek közt, attól még elvileg lehetnek nehézségek a feladat kérdéseinek megadásában:
+
+	\begin{quotation}
+		Meg tudjátok mondani, hogy melyik legény felelt meg, hányadik kérdésre, és mit felelt?
+	\end{quotation}
+
+	Ehhez nem elég tudnunk azt, hogy mi egy jó jóslófüggvény, ehhez azt is tudnunk kell, hogy a jóslófüggvény létezése bizonyos értleemben megköti a lehetőségeket, és nem lehetsége,s hogy eg másik jóslófüggvényt használva a fiók képesek lennének megfelelni a királynak, de a feladat kérdésére más válasz adódnék.
+
+	Előfordulhat az, hogy az optimaliás tétele nem igaz, és a feladatnak egy akár életszerűtlen de létző alternatív megoldás is van?
+
+	Az optimaliás tételét jelenleg nem tudom bizonyítani, de a feladat impliciten kihasználja, előfeletételezi fennállását. Így a feladat szószerinti kérdésére tett választ ennek figyelembevételével közlöm.
+
+	\subsection{MI-autonómia, emergencia?}
+
+	A harmadik kérdés még e területen inkább kihívás, mint tétel, az autonómia még tovább vitele. Ez a négyfitút mint önálló autonóm aktort, genst még tovább viszi. Lehetséges-e olyan MI-programot írni, ahol a jóslófüggvényre a program magától jön rá, persze a királlyal való előzetes ,,dry run'' próbajászmák során? Felmutatható-e egy ilyen webalkalmazás? Ez esetben a fiúk egyöntetűen sak egy ilyen tanuló algoritmussal érkeznek. Minden máásra már dry run próbaajátékok során kell rájönni tudniuk.
+
+	Mindenesetre programozóknak e kérdéskor jó ,,ürügyet'' ad elosztott algoritmusok, felhőwebalkalmazások gyakorlására.
+
+	Ami viszont innen már a fizika kérdésköreihez is vezethet: emergencia, emergens rendszerek, egyéb önszabályozási kérdések, flock jelenségek. Biológiai és társadalmi példák: tömeg visekledése (diszkótűz, szurkolótömegben hullámok), biológiában a termeszek bárépítő emergenciája jóval egyszerűbb egyéni alkoritmusok alapján, amelyek az egyedekben egységes(ebb)en vannak benne.
 
 	\subsection{Abszolút táblák}
 
