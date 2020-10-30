@@ -30,12 +30,18 @@ theorem5 = all testRelativeWitch
 theorem6 :: Bool
 theorem6 = all testRelativeWitch
     [
-        (4, N2Per4, minInf2  , [0..5], [Nothing   , Nothing   , Nothing   , Nothing   , Nothing   , Nothing  ]),
-        (4, N2Per4, whole2  0, [0..5], [Nothing   , Nothing   , Nothing   , Nothing   , Nothing   , Just True]),
-        (4, N2Per4, andHalf 0, [0..5], [Just False, Nothing   , Nothing   , Nothing   , Nothing   , Just True]),
-        (4, N2Per4, whole2  1, [0..4], [Just False, Nothing   , Nothing   , Nothing   , Just True            ]),
-        (4, N2Per4, andHalf 1, [1..4], [            Just False, Nothing   , Nothing   , Just True            ]),
-        (4, N2Per4, whole2  2, [1..3], [            Just False, Nothing   , Just True                        ]),
-        (4, N2Per4, andHalf 2, [2..3], [                        Just False, Just True                        ]),
-        (4, N2Per4, whole2  3, [    ], [                                                                     ])
+        (4, N2Per4, minInf2          , [0..5], [Nothing   , Nothing   , Nothing   , Nothing   , Nothing   , Nothing  ]),
+        (4, N2Per4, whole2 0         , [0..5], [Nothing   , Nothing   , Nothing   , Nothing   , Nothing   , Just True]),
+        (4, N2Per4, quarter4         , [0..5], [Nothing   , Nothing   , Nothing   , Nothing   , Nothing   , Just True]),
+        (4, N2Per4, andHalf 0        , [0..5], [Just False, Nothing   , Nothing   , Nothing   , Nothing   , Just True]),
+        (4, N2Per4, threeQuarter4    , [0..5], [Just False, Nothing   , Nothing   , Nothing   , Nothing   , Just True]),
+        (4, N2Per4, whole2  1        , [0..4], [Just False, Nothing   , Nothing   , Nothing   , Just True            ]),
+        (4, N2Per4, andQuarter 1     , [0..4], [Just False, Nothing   , Nothing   , Nothing   , Just True            ]),
+        (4, N2Per4, andHalf 1        , [1..4], [            Just False, Nothing   , Nothing   , Just True            ]),
+        (4, N2Per4, andThreeQuarter 1, [1..4], [            Just False, Nothing   , Nothing   , Just True            ]),
+        (4, N2Per4, whole2  2        , [1..3], [            Just False, Nothing   , Just True                        ]),
+        (4, N2Per4, andQuarter 2     , [1..3], [            Just False, Nothing   , Just True                        ]),
+        (4, N2Per4, andHalf 2        , [2..3], [                        Just False, Just True                        ]),
+        (4, N2Per4, andThreeQuarter 2, [2..3], [                        Just False, Just True                        ]),
+        (4, N2Per4, whole2  3        , [    ], [                                                                     ])
     ]
