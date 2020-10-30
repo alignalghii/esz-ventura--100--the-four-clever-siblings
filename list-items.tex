@@ -45,6 +45,12 @@
 
 \setcounter{tocdepth}4
 
+\usepackage{multirow}
+\usepackage{array}
+\setlength{\extrarowheight}{4px}
+
+\usepackage{comment}
+
 \title{100. feladvány}
 \author{Endrey Márk}
 
@@ -195,9 +201,8 @@
 		&                &&\text{, mert}_1\nomainfun025
 	\end{align*}
 
-	\section{Táblázatok}
 
-	\subsection{Relatív táblák}
+	\section{Relatív táblák}
 
 	Alap (,,feles'') relatív tábla, (negyedekre) kiterjesztett relatív tábla, (egészekre) leszűkített relatív tábla. Alternatív jelölésrendszerek rájuk:
 	\begin{table}[H]
@@ -211,7 +216,9 @@
 		\end{tabular}
 	\end{table}
 
-	\subsubsection{Az elvonatkoztatott model fő kommunikációs felei}
+	\subsection{Alap-reltábla: az elvonatkoztatott model fő kommunikációs felei}
+
+	Ezt fejezi ki a leszűkített relatív tábla:
 
 	\begin{table}[H]
 		\caption*{$\currymainfun0$ és $\currymainfun2$ relatív táblázata: a 0-s és a 2-es testvér szerepe szimmetrikus a relatív reprezentációban}
@@ -230,19 +237,121 @@
 		\end{tabular}
 	\end{table}
 
-	\subsection{A párkommunikáció-elvonatkoztatásból való visszalépés}
+	\section{Kiterjesztett reltábla: a párkommunikáció-elvonatkoztatásból való visszalépés}
 
 	A másik két testvér táblázatának kitöltésen nehezebb, hiszen a fentebbi modellek lényegében két kommunikáló félre redukálják a sémát.
 	Az \#1 és \#3 indexű testvér lényegében csak afféle ,,vezeték'' ebben,hogy ez a fajta absztrakció ehetővé váljék, szerepük implicit.
 	Mindenesetre ettől függetlenül nekik is konrét táblát kell adni, sőt, nemcsak az abszolút, hanem már itt a relatív tábla terén is is.
 
+	\subsection{A repeater-szabályok} 
+
 	A ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfun0jn = \nothing$, és $\nomainfun1jn$ ha $\nomainfun0jn \lor \mainfun0jn = \just\incl \lor \mainfun0jn = \just\excl$.
 
-	\subsubsection{A kiterjesztett relatív tábla}
+	\begin{table}[H]
+		\caption*{$\currymainfun1$ és $\currymainfun3$ relatív táblázata: a repeater szerep elfogadása esetén}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+		$\frac14$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$1\frac14$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$2\frac14$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
 
-	Jelölésben a macskás boszorkány. Elvileg a Dom (tök és koponya)-függvényeknek is van kiterjesztett változata.
 
-	\subsubsection{Az autonómia tétele és az optimalitás tétele}
+	Elvileg a Dom (tök és koponya)-függvényeknek is van kiterjesztett változata.
+
+	\subsection{A repeater-szabályok levezethetősége, implicitálódása}
+
+	Valójában persze a repeater-szabáyloknak elég a feladat szempontjából fontos esetekben megvalósulniuk. Azokon a pontokon, amelyek a rekurzív hívásokat nem rontják el érdemben, ott megengedhető a repeater-szabályoktól való eltérés.
+
+	\begin{table}[H]
+		\caption*{A $\currymainfun0$ és $\currymainfun2$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\caption*{Abszolút tábla}
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                           \\
+			                       &                           &    0                         &    1                         &    2                         &    3                         &    4                &    5      \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    $\mainfun{*}00$           &    $\mainfun{*}01$           &    $\mainfun{*}02$           &    $\mainfun{*}03$           &    $\mainfun{*}04$          &    $\mainfun{*}05$          \\\cline{2-8}
+			                       &  1                        &    $\mainfun{*}{\frac14}0$   &    $\mainfun{*}{\frac14}1$   &    $\mainfun{*}{\frac14}2$   &    $\mainfun{*}{\frac14}3$   &    $\mainfun{*}{\frac14}4$  &    $\mainfun{*}{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfun{*}{\frac12}0$   &    $\mainfun{*}{\frac12}1$   &    $\mainfun{*}{\frac12}2$   &    $\mainfun{*}{\frac12}3$   &    $\mainfun{*}{\frac12}4$  &    $\mainfun{*}{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfun{*}{\frac34}0$   &    $\mainfun{*}{\frac34}1$   &    $\mainfun{*}{\frac34}2$   &    $\mainfun{*}{\frac34}3$   &    $\mainfun{*}{\frac34}4$  &    $\mainfun{*}{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    $\mainfun{*}10$           &    $\mainfun{*}11$           &    $\mainfun{*}12$           &    $\mainfun{*}13$           &    $\mainfun{*}04$          &    $\mainfun{*}05$          \\\cline{2-8}
+			                       &  1                        &    $\mainfun{*}{1\frac14}0$  &    $\mainfun{*}{1\frac14}1$  &    $\mainfun{*}{1\frac14}2$  &    $\mainfun{*}{1\frac14}3$  &    $\mainfun{*}{\frac14}4$  &    $\mainfun{*}{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfun{*}{1\frac12}0$  &    $\mainfun{*}{1\frac12}1$  &    $\mainfun{*}{1\frac12}2$  &    $\mainfun{*}{1\frac12}3$  &    $\mainfun{*}{\frac12}4$  &    $\mainfun{*}{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfun{*}{1\frac34}0$  &    $\mainfun{*}{1\frac34}1$  &    $\mainfun{*}{1\frac34}2$  &    $\mainfun{*}{1\frac34}3$  &    $\mainfun{*}{\frac34}4$  &    $\mainfun{*}{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    $\mainfun{*}20$           &    $\mainfun{*}21$           &    $\mainfun{*}22$           &    $\mainfun{*}23$           &    $\mainfun{*}04$          &    $\mainfun{*}05$          \\\cline{2-8}
+			                       &  1                        &    $\mainfun{*}{2\frac14}0$  &    $\mainfun{*}{2\frac14}1$  &    $\mainfun{*}{2\frac14}2$  &    $\mainfun{*}{2\frac14}3$  &    $\mainfun{*}{\frac14}4$  &    $\mainfun{*}{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfun{*}{2\frac12}0$  &    $\mainfun{*}{2\frac12}1$  &    $\mainfun{*}{2\frac12}2$  &    $\mainfun{*}{2\frac12}3$  &    $\mainfun{*}{\frac12}4$  &    $\mainfun{*}{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfun{*}{2\frac34}0$  &    $\mainfun{*}{2\frac34}1$  &    $\mainfun{*}{2\frac34}2$  &    $\mainfun{*}{2\frac34}3$  &    $\mainfun{*}{\frac34}4$  &    $\mainfun{*}{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    $\mainfun{*}30$           &    $\mainfun{*}31$           &    $\mainfun{*}32$           &    $\mainfun{*}33$           &    $\mainfun{*}04$          &    $\mainfun{*}05$          \\\cline{2-8}
+			                       &  1                        &    $\mainfun{*}{3\frac14}0$  &    $\mainfun{*}{3\frac14}1$  &    $\mainfun{*}{3\frac14}2$  &    $\mainfun{*}{3\frac14}3$  &    $\mainfun{*}{\frac14}4$  &    $\mainfun{*}{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfun{*}{3\frac12}0$  &    $\mainfun{*}{3\frac12}1$  &    $\mainfun{*}{3\frac12}2$  &    $\mainfun{*}{3\frac12}3$  &    $\mainfun{*}{\frac12}4$  &    $\mainfun{*}{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfun{*}{3\frac34}0$  &    $\mainfun{*}{3\frac34}1$  &    $\mainfun{*}{3\frac34}2$  &    $\mainfun{*}{3\frac34}3$  &    $\mainfun{*}{\frac34}4$  &    $\mainfun{*}{\frac34}5$  \\\hline
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[H]
+		\caption*{Abszolút tábla}
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
+				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  1                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  3                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  1                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\hline
+		\end{tabular}
+	\end{table}
+
+	A ,,negyedes'' legények (1, 3) kitöltéskekor érzékeljük, hogy információveszteség történik: nem figyljük, egy-egy legény mennyi bárányt számol az egyik irányban külön és a másik irányban külön.
+	Ez a fajta információvesztés --- ,,a karok vesztesége'' --- a később említendő ,,oprtimalitás tétele'' szempontjából lesz érdekes.
+
+	\section{Tételek és kérdések}
+
+	\subsection{Az autonómia tétele és az optimalitás tétele}
 
 	Az autónómia téetle aztmondja ki, hog az 1-es és 3-as legénynek nem kell kólon \texttt{const Nothing} jellegű szabályokat előírnunk.
 	Dolgozhatnak ugyanazzal a semeatikával, mint a 0-s és 2-es legény. Persze a konrét forgatókönyvekben vanóba afféle \texttt{const Nothing} repeater jellegű szerep hárul rájuk,
@@ -268,7 +377,15 @@
 
 	Ami viszont innen már a fizika kérdésköreihez is vezethet: emergencia, emergens rendszerek, egyéb önszabályozási kérdések, flock jelenségek. Biológiai és társadalmi példák: tömeg visekledése (diszkótűz, szurkolótömegben hullámok), biológiában a termeszek bárépítő emergenciája jóval egyszerűbb egyéni alkoritmusok alapján, amelyek az egyedekben egységes(ebb)en vannak benne.
 
-	\subsection{Abszolút táblák}
+	\section{Abszolút táblák}
+
+	A fenti kérdések megközelítéséhez tovább kell lépnünk a modellezésben: élően meg kell valósítanunk a feladatot.
+	A korét leprogramozásnál érdemes meghatároznunk a már végső kódot közvetlenül irányító abszolút táblákat.
+	Nem feletétlen kell a porgramnak ezeket használnia: az autonómia tétele szerint elegendő a relatívá táblákat használnunk.
+	A relatív táblákat eekkor emergens viselekedés eredményeként kapjuk, deklarálásuk tehát implicit, illetve esetleg a tesztek tartalmazzák.
+	De épp ezért, akár csak tesztcélokból is, de érdemes önállóan is meghatárznunk az abszolút táblákat.
+
+	Jelölésben a macskás boszorkány.
 
 	\subsubsection{Az elvonatkoztatott model fő kommunikációs felei}
 
