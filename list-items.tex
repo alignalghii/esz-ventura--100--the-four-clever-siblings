@@ -54,6 +54,7 @@
 
 \newcommand{\mainfuncomm}[3]{\mathwitch_{#2}^{#1}#3}
 \newcommand{\mainfunext}[3]{\left\uparrow\!\!\!\mathwitch*_{#2}^{#1}#3\right.}
+\newcommand{\eyefun}[3]{\eye^{#1}_{#2}#3}
 
 \newcommand{\gbh}[3]{\mathop{\mathghost}^{#1}_{#2}#3}
 
@@ -80,100 +81,192 @@
 
 	\tableofcontents
 
+	\section{A feladat és a válaszok}
+
+	A feladatra való megoldásom lényege egy rekurzió felismerése. Ez alapján kétféle protokollalgoritmus is adtam a négy testvér számára.
+	Ezek optimalitása, az erőforrásokkal való takarékossága különböző fokú, de mindkettő képes a király által támasztott korlátokon belül megadni a helyes választ.
+
+	Mindez a bárányok tetszőleges elrendezésére és a királylány tetszőleges nyájhoz való csapódása illetve különbarangolása esetében igaz.
+	Nagyon erős sejtés, hogy a ,,kevésbé szélsőséges'', ,,a kiegyensúlyozottabb'', ,,homogénebb'' nyájbeosztások esetén a két algoritmus optimalitási különbsége csökken, a kevésbé optimális algoritmus ,,hátránya'' enyhébb.
+
+	Mindkét protokollalgoritmusra igaz, hogy nem hasznáják föl a teljes információt (a testvérek csak azt nézik, összesen hány bárányt látnak, és nem használják ki, hogy jobb kezük felül hányat külön, és bal kezük felől hányat külön). Nagyon erős sejtés, hogy a teljesen homogén nyájleosztás esetén (25--25--25--25) ez nem okoz erőforrásvesteséget, és ez esetben mindkét algoritmus optimális.
+
+	Ezek alapján az egyes  kérdéskere adott válaszaim:
+
+	\begin{quotation}
+		Alapkérdés: ,,\textit{[\dots] melyik legény felelt meg, hányadik kérdésre, és mit felelt?}''
+	\end{quotation}
+
+	Válasz: Amennyiben az optimalitási sejtés igaz, akkor: \textbf{a 26.~menetben} fog felelni a \textbf{kezdő testvérrel szemközt álló testvér}, vagyis a harmadik testvér (illetve a végső ,,abszolút protokollfüggvény''-táblázatban használt 0-indexű testvérszámozás szerinti 2.~testvér). Ez mindkét protokollalgoritmus esetén így van, a testvérnégyes mindkét protokollalgoritmus szerint dolgozhatik.
+	
+	\begin{quotation}
+		Haladó kérdés: ,,\textit{Mi lett volna akkor, ha a király nem egyenlően osztja el a bárányokat? Tetszőleges elosztásban is megoldható lett volna a feladat, ha elég okosak a kérők?}''
+	\end{quotation}
+
+	Válasz: Mindkét protokollalgoritmus teljesíti a király által megszabott korlátokat tetszőleg nyájelrendezés és a királylány tetszőleges döntése esetén is.
+
 	\section{Bevezetés}
 
-	\subsection{Tudatemlélettel rendelkező aktorok}
+	\subsection{,,Tudatemlélettel'' rendelkező aktornégyes}
+
+	Egyet azonnnal biztosan láthatunk: ha egy testvér 101 birkát lát maga körül, azonnal készen állhat a helyes válasszal: a királylány nem kóborolt el!
+
+	Ezenkívül azt is észrevehetjük, hogy az egymással szembenálló (tehát nem szomszédos!) testvérpárok közt egyfajta komplemetaritás teljesül: ketten-ketten együtt pont a nyáj összes birkáját számoljk le. ha az egyik 30-at lát, akkor a másik 70-es vagy 71-et, attól függően, hogy a kriálylány a nyájhoz csapódott-e, vagy különbarangolt. Különös módon a szemközti testvérpárok közt szorosabb kacsolat van, mint a szomszédosak közt.
+
+	E két felismerésen túl azonban a feladat nehéz (még akkor is, ha azzal könnyítjük, hogy a nyáj 100 helyett csak négytagú).
+ 
+	A testvérek nyilvánvalóan valamilyen protokollt fognak használni. Egyetlen lehetőségük van arra, hogy ,,kommunikáljanak'' egymással, vagyis egyetlen fajta információ tud ,,átadódni'' közöttük: minden egyes testvér tudnak következtetést levonni abból, hogy a király vajon miért nem állt meg korábban egy előtte levő testvérnél, és miért ment tovább őhozzá. Például, ha egy testvér pontosan 0 birkát számol össze az általa részletesen is belátott mezőkön, akkor tud következtetni arra, hogy a vele pont szemben lévő testvér csakis 100 vagy 101 birkát láthat részletesen be. Amennyiben azt is tudja, hogy a király már járt ennél a bizonyos szembenlevő testvérnél, akkor abból a tényből, hogy a király onnan továbblépet őhozzá, máris kikövetkeztetheti, hogy a szembenlévő testvérnél csakis 100 birka lehet. Ugyanis ha 101 birka lett volna ott.
+
+	A testvérek egy képzeletbeli ,,labdát'' adnak körbe egymásnak, ahol a szembenállók állnak igazán játékkapcolatban. Minden egyes testvér tudja figyelni, hogy vele szembenálló társa ,,továbbadja''-e neki a labdát, vagy ,,elkapja''.
 
 	\subsubsection{,,Tudom, hogy tudod, hogy tudom, hogy tudod\dots''}
 
+	A közismert gúnyos mondás ezúttal szó szerint vehető rekurziós tanáccsá válik:
+
 	\begin{itemize}
-		\item 101: Ha 101 bárányt látsz, társad csakis 0-t láthat, és a ladbdát te biztos nem tőle, hanem a királytól kaptad. És ne is engedd át neki a labdát, hanem a királynak: azzonnal jelentsd be hogy a királylány a nyájban van.
+		\item 101: Ha 101 bárányt látsz, társad csakis 0-t láthat, és a ladbdát te biztos nem tőle, hanem a királytól kaptad. És ne is engedd át neki a labdát, hanem a királynak: azonnal jelentsd be hogy a királylány a nyájban van.
 		\item 0: Ha   0 bárányt látsz, társad 101-et vagy 100-at láthat. Ha ő volt már, akkor biztos, hogy nem 101-et, ekkor jelents be, hogy a királylány elkóborolt. Ha ő nem volt még, engedd át neki a labdát. Ha 101 báránya van, tőled függetlenül be fogja jelenteni, hogy a királynő a nyájban van, de ha 100 báránya van, akkor  épp a te átengedésed tényéből fogja megtudni, hogy te 0 bárányt látsz, ő erre alapozva be fogja jelenteni, hogy a királylány ekóborolt.
 		\item 100: Ha 100 bárányt látsz, társad 0-t vagy 1-et láthat. Mindenképp engedd át számára a labdát (akár tőle, akár a királytól kaptad). Ha ő 0-t lát, be fogja jelenteni, hogy a királylány elkóborolt. Ha ő 1-et lát, vissza fogja neked dobni a labdát. Ekkor jelents be hogy a királylány a nyájban van.
 		\item 1: Ha 1 bárányt lász, társad 100-at vagy 99-et láthat. Engedd áát neki a labdát. ugyanis ha ő 100-at lát, kíváncsi lesz rá, hogy te 0-t vagy 1-et látsz-e, így vissza fogja dobni neked.
 	\end{itemize}
 
-	\section{Egyszerűbb feladat kitűzése tapasztalatgyűjtés céljából --- Felmerülő redukciós szempontok, ötletek}
+	\subsection{Egyszerűbb rávezető feladatok?}
 
+	Mivel fentebb láthattuk, hogy valamiféle rekurziós, redukciós lépés várható a megodás során, ezért megpróbáljuk az eredeti feladatot először egy rávezető egyszerűbb feladattal helyettesítni, pusztán afféle tpsztalatgyűjtés céljából. Több szempoont is eszünk bejuthat: 
 
 	\begin{itemize}
-		\item Csökkentjük a ,,kör'' méretét (4 helyett 3)
-		\item Csökkentjük a birkák számát ($100 + 1$ helyett $4 +1$, ahol végső esetben megegyezik a kör méretével. Bár ez is nehéz, de ez már plauzibilis kihívás, jobban el tudi indulni az ember, főleg, hogy még további egérút is van: $3 +1$, $2 + 1$, $1 + 1$, és végső egyszerűsítésképp $0 + 1$, ami a lehetséges elképzelhető minimum.
+		\item Csökkentjük a ,,kör'' méretét (pl.~4 helyett 3, vagy 4 helyett 2)
+		\item Csökkentjük a birkák számát ($100 + 1$ helyett $4 +1$, ami afféle végső egyszerűsítés, hisz a birkák száma megegyezik a kör méretével. Bár ez is nehéz, de ez már plauzibilis kihívás, jobban el tudi indulni az ember, főleg, hogy még további egérút is van: $3 +1$, $2 + 1$, $1 + 1$, és végső egyszerűsítésképp $0 + 1$, ami a lehetséges elképzelhető minimum.
 	\end{itemize}
 
-	\subsection{Körredukció}
+	\subsubsection{Kör tagszámára alapozó egyszerűsítés}
+
+	Meglepő módon a ,,4 helyett 3'' viszont egyelőre nem tűnik számomra tapasztatszerzsés szempontjából  lényegi könnyítésnek, redukció szempontjából meg  visszalépésnek: a 3-as eset akár még bonyolultabb is lehet következtetéek szempontjából (nem jön létre ,,párkommunikációs'' alprotokoll!).
+
+	Tehát maradunk a 4-tagú körnél, viszont azt viszont sokat fogjuk kihasználni, hogy a szembenálló testvérek egyfajta ,,párkommunikációt'' folytatnak egymással. Ezeket a ,,párkommunikációs alprotokollokat'' már valóban afféle 2-tagú körként fogjuk modellezni és formalizálni.%Egyfajta ,,4 helyett 2''-ról ugyan lehet beszélni, de az a ,,$100 + 1$ helyett'' megközelítésből adódik nagyon szerves, arra külön jellemző okokból.
+
+	%A továbbiakban nagyrészt e létszámredukció lesz érvényben az írás folyamán, és az általánosítások is e mentén történnek.
+	%A végén talán még visszatérünk a körredukciós, és főleg a köráltalánosítási kérdésekre is.
+
+	\subsubsection{Nyáj létszámára alapozó egyszerűsítés}
+
+	A $100 + 1$ helyett $4 + 1$ redukció lesz érvényes az írás nagy részében, mindenütt, ahol értelemszerűen látszik (azaz mindenütt, ahol a 4-esek és 5-ösök szerepe kitüntetettként szerepel), ezt amúgy a ,,szumma-jellegű'' függvények ,,fölső'' paramétere explicit is jelezni is fogja (konkrétan a $\displaystyle\mainfuncomm Nqk$ párkommunikációs relatív alprotokollfüggvény, a $\displaystyle\mainfunext Nqk$ kitejesztett relatív protkollfüggvény, és a $\mathop{\bigtriangleup\mspace{-14.607mu}\divideontimes}\limits_N^qk$ abszolút protokollfüggvény $N$-paramétere).
+
+	Lehet bizonyos értelemben még jobban is egyszerűsíteni létszám terén, és a $4+1$ helyett $0+1$,  $1+1$,  $2+1$,  $3+1$. Eredetileg ezzel kezdtem a feladat megoldását, de ennek tanulságait nem összegeztem külön, hanem beleépítettem a $4+1$ jellegű egyszerűített feladatba.
 
 
-	Meglepő módon a ,,4 helyett 3'' viszont egyelőre nem tűnik számomra tapasztatszerzsés szempontjából  előrelépésnek, redukció szempontjából meg  visszalépésnek: a 3-as eset akár még bonyolultabb is lehet következtetéek szempontjából. Egyfajta ,,4 helyett 2''-ról ugyan lehet beszélni, de az a ,,$100 + 1$ helyett'' megközelítésből adódik nagyon szerves, arra külön jellemző okokból.
+	\section{A párkommunikációra elvonatkoztató modell és alprotokoll}
 
-	A továbbiakban nagyrészt e létszámredukció lesz érvényben az írás folyamán, és az általánosítások is e mentén történnek.
-	A végén talán még visszatérünk a körredukciós, és főleg a köráltalánosítási kérdésekre is.
+	A párkommunikációra elvonatkoztató alprotokoll azt jelenti, hogy a továbbiakban elvonatkoztatunk a 4-tagú körötől és a 4 testvértől, és két ügyfél (aktor) kommunikációjának tekintjük a feladatot.
+	Ez kb.~azt jelenti, mintha csak az első és a vele szembenlevő harmadik testvér lenne csak jelen. A többi testvérnek nincs szerepe, létük egyszerűen belolvad a kommunikációs ,,csatorna'' közegébe. 
 
-	\subsection{Létszámredukció}
+	Fontos látni, hogy a párkommunikációra elvonatkoztató alprotokoll teljes mértékben és minden helyzetben semmiképp sem lehet egyenrangú, ekvivalens a lehetséges optimális protokollokkal.
 
-	A $100 + 1$ helyett $4 + 1$ redukció lesz érvényes az írás nagy részében, mindenütt, ahol értelemszerűen látszik (mindenütt, ahol a 4-esek és 5-ösök szerepe kitüntetettként szerepel).
+	Például, ha az induló (első) legény és a második legény közti mezőn két bárány van, a második és a harmadik testvér közt pedig három bárány, akkor a második legény azonnal észlehetné, hogy ő összesen öt bárányt lát, ami nagyobb, mint a nyáj teljes létszáma (4), tehát máris jelenthetné, hogy a királylány szükségszerűen a nyájban van, a kör azonnal megszakadnék.
 
-	\subsection{A redukció redukciója: elő-előtanumányok}
+	A párkommunikációra elvonatkoztató protokoll szerint viszont az első és a harmadik legény közt zajlik az  érdemi protokoll (a második legény pedig, ha létét modellezük egyáltalán, mindenre csak azt mondja, ,,nem tudom'', mintegy automatikusan továbbadva a labdát, tehát lényegében csak passzívan továbbadja a kört az első legénytől a vele szemben lévő harmadik legyén felé). Ugyanilyen passzív továbbitó szerepet tölt be a negyedik legény is, aki a harmadik legénytől továbbít az első legény felé. Az érdemi protokollkommunikáció tehát az első és a vele szembenlevő harmadik legény közt zajlik, akik majd a kiegészítés-elv alapján rekurziós megfontolások alapján majd sokadik körben majd kitalálják, hogy öt bárány van, a királylány tehát nem kóborolt el. Ezt azonban a második legény azonnal ki tudta volna találni, ha nem kényszerült volna passzív szerepre a ,,párkommunikációra elvonatkoztató alprotokoll'' modellje miatt.
 
-	\subsubsection{$4 + 1$ helyett $0 +1$}
-	\subsubsection{$4 + 1$ helyett $1 +1$}
-	\subsubsection{$4 + 1$ helyett $2 +1$}
-	\subsubsection{$4 + 1$ helyett $3 +1$}
+	Persze a példában a birkák is eléggé szélsősegesen helyezkedtek el. Kiegyensúlyozottab, homogénebb nyájpartíció esetében a ,,párkommunkációra elonatkoztató alprotokoll'' mint modell és megoldás valószínűleg nem ennyire erőforrástékozló. (Erős sejtés).
+
+	A párkommunikációra elvonatkoztató alprotokoll tehát semmiképp sem optimális erőforrásigényű általános esetben: nem használja ki optimálisan a rendelkezésre álló információt, erődorrást pazarol. Azonban ez azon múlt, hogy az egyik legénynél szélsőségesen jó helyzetben volt. A lehető legkiegyensúlyozottabb, leghomogénebb esetben (minden bárány egyenletesen van elosztva a négy mező közt) akár olyannyira is kisebb lehet az  hátrány, amit párkommunikációra elvonatkoztató protokoll információ-és erőforráspazarlása okoz, hogy akár még az is lehetséges, hogy az ilyen homogén esetekben ez  protokoll optimális tud lenni. (Erős sejtés.)
+
+	\subsection{Relatív alprotokollfüggvény(pár), aktor-pár, emergencia}
+
+	Tehát munkahipotézisként fogadjuk el a párkommunikációra elvonatkoztató alprotokoll által nyújtható modellt. \emph{Két} kommunikáló ügyfelünk van, ők önálló, meglehetősen autonóm ágensek, aktorok, viselkedésüket saját maguk irányítják a bennük lévő protkollfüggvény alapján, a mi érdeklődésünk tárgya pedig épp az általuk alkotott teljes rendszer ,,emergens'' viselkedése, az észlehető protokoll ,,kiemelkedése'', miként a termeszek is bonyolult bolyt építenek úgy, hogy az egyes termesz viselkedése valójában egyszerű triggerekre épül pár szabály (szagok, társas távolságok) alapján.
+
+	Az egyéni aktorok proorkollfüggvényét többnyire a ,,relatív protokollfüggvény'' jelzővel fogom illetni, megkülönböztetésül a teljes rendszert viselkedését expliciten, mintegy kézivezérelten, emergenciára nem hivatkozóan leíró ,,abszolút protokollfüggvénytől''. Az abszolút protokollfüggvény megadása majd a feladat legvégső lépése lesz, amiből a válaszok már közvetlenül fognak adódni.
+
+	Mindenesetre ez még mesze van, egyelőre még sokáig a relatív protokollfüggvények megadása van terítéken.
+
+	\subsection{Kölcsönös rekurzó --- protokollszumma, protokoll-koszumma}
+
+	 \dots (,,boszorkányszumma, ellenboszorkányszumma''), és a társelőzménylehetőség-kombináló segédfüggvény.
 
 
-	\section{A párkommunikációra elvonatkoztató protokoll}
+	A kommunikáció az egyik ,,induló'' ágensnél kezdődik --- az ő relatív protokollfüggvényét jelölje a $\mainfunA Nqk$ függvény ---, a másik aktor relatív protokollfüggvényét pedig  $\mainfunB Nqk$ jelöli. A $N$ paraméter és a $q$, $k$ argumetum jelentése:
 
-	Fontos látni, hogy a párkommunikációra elvonatkoztató protokoll teljes mértékben semmiképp sem lehet egyenrangú a lehetséges optimális protokollokkal.
+	\begin{description}
+		\item[Az $N$ paraméter] itt (és még elég sokáig ebben az írásban) $N=4$ értékű --- 4 birka a nyáj teljes létszáma, amibe nincs belertve az akár hozzácsapódó, akár különkóborló királylány.
+		Az írás végén természetesen $N=100$ paraméterértékkel számolt protokollfüggvények is lesznek.
+		A lehetséges értékek tehát $N \in \mathbb N$, az eredmények általánosak.
 
-	Például, ha az induló (első) legény és az első legény közti mezőn két bárány van, az második és a harmadik közt pedig három, akkor a második legény azonnal észlehetné, hogy ő összesen öt bárányt lát, ami nagyobb, mint a nyáj teljes létszáma (4), tehát a királylány szükségszerűen a nyájban van.
+		\item[A $q$ argumentum] a zajló kommunikáció egyfajta ,,életkorát'' ,,menetszámlálóját'' jelzi.
+		Lehetséges értékei:
+		\begin{itemize}
+			\item a $q = 0$ érték azt jelenti, hogy a kommunikáció épp most, és épp pont az adott aktornál kezdődött el (,,épp most lépett oda elsőként a király''). A $q = 1$ érték azt jelenti, hogy épp a második körbe lépett az adott aktor (,,épp most ért körbe egy teljes kört a király'').
+			\item A $q$ nem egyesével, hanem ,,felesével'' változik: a $q = \frac12$ azt jeleti, hogy a kommunikáció nem az aktuális, hanem a ,,társaktornál'' indult (a másik aktornál kezdett a király), és természetesen a $q = 1\frac12, 2\frac12 \dots$ jelentése, hogy már 1 (2, stb \dots) teljes kör lement ezen felül.
+			\item Formális jelentősége van a $q = -\infty$ lehetséges értéknek. Ez jelképezi a még soha meg nem szólított aktort: az aktor amaz állapotát, amikor a kommunkáció még el sem indult egyáltalán.
+		\end{itemize}
+		Összesítve: a lehetséges értékek tehát $q \in \setOf{-\infty, 0, \frac12, 1, 1\frac12\dots}$.
 
-	A párkommunikációra elvonatkoztató protokoll szerint viszont az első és a harmadik legény közt zajlik az  érdemi protokoll, a második legény pedig mindenre csak azt mondja, ,,nem tudom'', és ezáltal lényegében csak passzívan továbbadja a kört az első legénytől a vele szemben lévő harmadik legyén felé. Ugyanilyen passzív továbbitó szerepet tölt be a negyedik legény is, aki a harmadik legénytől továbbít az első legény felé. Az érdemi protokollkommunikáció tehát az első és a vele szembenlevő harmadik legény közt zajlik, akik majd a kiegészítés-elv alapján sokadik körben majd kitalálják, hogy öt bárány van, a királylány tehát nem kóborolt el. Amit a második legény azonnal ki tudott volna találni, ha nem kényszerült volna passzív szerepre.
+		\item[A $k$ argumentum] jelenti azt, hogy az adott aktor hány brányt tud összeszámolni összesen.
+		A modell tehát nem használja ki és nem is modellezi, hogy a valós feladatban minden egyes legény azt is észleli, hogy hány bárány van az ,,egyik'' oldalára, egyik keze felé eső mezőben, és hány van a másik keze felőli mezőben. Mindez azt is előrevetíti, hogy az e modell és protokolfüggvények által meghatározható protokoll nem lesz optimális, legalbbis nem minden esetben. Van egy nagyon erős sejtés arra nézve, hogy a feladatban kitűzött homogén báránypartíció (25--25--25-25) esetében ez a hátrány elenyészik, és az optimalitást nem veszi el.
 
-	A párkommunikációra elvonatkoztató protokoll tehát semmiképp sem optimális erőforrásigényű általános esetben: nem használja ki optimálisan a rendelkezésre álló információt, erődorrást pazarol. Azonban ez azon múlt, hogy az egyik legénynél szélsőségesen jó helyzetben volt. Kiegyensúlyozottabb, homogénebb esetben (minden bárány egyenletesen van elosztva a négy mező közt) kisebb is lehet az  hátrány, amit párkommunikációra elvonatkoztató protokoll információ-és erőforráspazarlása okoz: sőt még az is lehetséges, hogy az ilyen homogén esetekben ez  protokoll optimális tud lenni.
+		Mindenensetre $k$ lehetséges értékei természetesen: $k\in\setOf{0\dots N+1}$.
 
-	Protokollszumma, protokoll-koszumma és a társelőzménylehetőség-kombináló. (,,Boszorkányszumma, ellenboszorkányszumma'').
-
-	\subsection{Azonnali érték}
-
-	Legyen $N \in \mathbb N; q \in \setOf{0, \frac12}$.
+		\item[A függvények által visszadott lehetséges értékek:] pontosan azok a válaszlehetőségek, amelyeket a testvérek kiejthtnek a szájukon a király felé. Egyfajta \texttt{Maybe Bool}: ,,\textit{Tudom: igen!}'', ,,\textit{Tudom: nem!}'', ,,\textit{Nem tudom!}''. Jelölésekkel: $\mainfunA Nqk, \mainfunB Nqk \in \setOf{\nothing, \just\incl, \just\excl}$.
+		\begin{itemize}
+			\item $\nothing$: ,,továbbadja a kommunikációs labdát (protokoll-labdát, protokolltokent)'' a társ-aktornak, vagyis azt feleli a király kérdésére: ,,Nem tudom!''.  Azaz ,,továbbengedi a királyt'' --- nem szakad meg a kör, halad tovább a teljes rendszer protokollviselkedése.
+			\item $\just\incl$: azt feleli a király kérdésére: ,,Megadom a választ:  a királylány a nyájjal van, hozzácsapódott!''. Ezzel meg is szakítja a kört, vége a kommunikációnak, a teljes rendszer protokollviselkedésének.
+			\item $\just\excl$: azt feleli a király kérdésére: ,,Megadom a választ:  a királylány nincs a nyájjal, elkóborolt!''. Ezzel meg is szakítja a kört, vége a kommunikációnak, a teljes rendszer protokollviselkedésének.
+		\end{itemize}
+		A válasz ,,adatszerkesete egyébként pontosan az, amit a funkcionális programnyelvek \texttt{Maybe}-ként (itt konkrétan \texttt{Maybe Bool}-ként) ábrázolnak:
+		\begin{itemize}
+			\item A $\just{\dots}$ jelentése: akár $\just\incl$, akár $\just\excl$, szóval mindkettőre illeszkedő minta.
+			\item A $\hat\lnot$ jelentése: a $\just\dots$-on ,,átvetített'' (\texttt{map}-elt) logikai tagadás:
+			\begin{align*}
+				\mathop{\hat\lnot}\just\incl = \just{\lnot\incl} = \just\excl\\
+				\mathop{\hat\lnot}\just\excl = \just{\lnot\excl} = \just\incl
+			\end{align*}
+		\end{itemize}
+	\end{description} 
+	
+	Most akkor íme definiáljunk mindkét függvényt, szóval mind a $\mainfunA Nqk$, mind a $\mainfunB Nqk$ függvényt az egymástól való kölcsönös rekurzióval, és az argumentumok jellegéből következő triviális kiindulófeltételekkel!
 
 	\begin{align}
-		\mainfunA Nq{N+1} &= \just\incl\\
-		\mainfunB Nq{N+1} &= \just\incl
+		\intertext{Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:}
+		\mainfunA N{-\infty}k = \mainfunB N{-\infty}k &= \nothing
+		\intertext{\dots vagyis az aktorok kommunikáció előtti állapotát formálisan úgy modellezzük, hogy nyitottak a kommunikációra, nem zárkóznak el a kommunikációtól, nem szakítják meg eleve a kört, mielőtt még a király egyáltalán mozogni kezdene: ,,nem szöknek el a toronyból eleve''. Formálisan tehát olyan értelemben ,,adják tovább a labdát'', hogy a kommunikációva egyáltaláb be tudnak lépni.}		\intertext{A fenti szabály felesegessé teszi, hogy a $q=0$ esetét külön deklaráljuk (mert rekurziósan következik a másik két deklarációból, ha elfogadjuk, hogy $0-\frac12 = -\infty$), de azért említsük meg explicite meg 0-ra is is:}
+		\mainfunA N0k=\mainfunB N0k &= \begin{cases}\nothing&\text{ha } k < N+1\\\just\incl&\text{ha }k=N+1\end{cases}
+		\intertext{A 0-s szabállyal talán ki lehetne váltani a $-\infty$-es szabályt, de a $-\infty$-es szabály még jól fog jönni a protokolfüggvény kitejesztésekor.}
+		\intertext{Újra független szabály: Legyen $N \in \mathbb N; q \in \setOf{0, \frac12}$:}
+		\mainfunA Nq{\parenthetical{N+1}} = \mainfunB Nq{\parenthetical{N+1}} &= \just\incl\\
+		\intertext{\dots vagyis az az aktor, aki épp észleli, hogy az őáltala összeszámolható bárányok száma eggyel nagyobb, mint a nyáj teljes látszáma, az legott azonnal tudja is a választ: a királylány a nyájjal van! (Ez persze $q > \frac12$ értékre nem történhetik meg, vagyis az első körön túl: hiszen ha egy aktor a második körben észlelné a királylány jelenlétét, akkor azt már az első körben is észlelte volna, vagyis még akkor megszakította volna a kört.)}
+		\intertext{Most jöhet a lényeg: a rekurziós szabály. Legyen $N \in \mathbb N$; $q \in \setOf{0, \frac12, 1, 1\frac12\dots}$; $k \in \setOf{0, \dots, N}$:}
+		\mainfunA Nqk &= \oplus\begin{cases}\displaystyle\mainfunB N{q-\frac12}{N-k}&\\\\\displaystyle\mainfunB N{q-\frac12}{N-k+1}&\end{cases}\\\\
+		\mainfunB Nqk &= \oplus\begin{cases}\displaystyle\mainfunA N{q-\frac12}{N-k}&\\\\\displaystyle\mainfunA N{q-\frac12}{N-k+1}&\end{cases}
+		\intertext{\dots épp ez a rekurziós lépés, vagyis a feladat bevezetőjében említett jellegzetes ,,\textit{Tudom, hogy tudod, hogy tudom\dots}'' jellegű következetetés, amely tudja, hogy a szemeben lévő partnernél épp a komplementer számú birka van, vagy komplementer plusz egy, és e két lehetőségből tud következtetni arra, hogy ebből tudható-e azonnal a válasz, vagy engedje-e tovább a kört. A rekurzió jól látszik, és az is, hogy felhasznál egy amúgy egyszerű $\oplus$ segédfüggvényt is, amely csak a már kikövetkeztetett lehetséges ,,szembenértékek'' között kombinál:}
 	\end{align}
 
+	\subsubsection{Segédfüggvények}
 
-	\subsection{Kiegészítéses számítás}
-
-	Legyen $N \in \mathbb N; q \in \setOf{0, \frac12, 1, 1\frac12\dots}; k \in \setOf{0, \dots, N}$
-
-	\begin{align}
-		\mainfunA Nqk &= \oplus\begin{cases}\displaystyle\mainfunB N{q-\frac12}{N-k}&\\\displaystyle\mainfunB N{q-\frac12}{N-k+1}&\end{cases}\\
-		\mainfunB Nqk &= \oplus\begin{cases}\displaystyle\mainfunA N{q-\frac12}{N-k}&\\\displaystyle\mainfunA N{q-\frac12}{N-k+1}&\end{cases}
-	\end{align}
+	A $\oplus$ segédfüggvény:
 
 	\begin{align*}
 		\oplus &: \text{Válasz} \times \text{Válasz} \to \text{Válasz}\\
-		\dom_\oplus &= \begin{cases}\angled{\nothing, \nothing}&\\\angled{\just\incl, \nothing}&\\\angled{\just\excl, \nothing}&\\\angled{\nothing, \just\incl}&\\\angled{\nothing, \just\excl}&\end{cases}\\
+		\dom_\oplus &= \begin{cases}\angled{\nothing, \nothing}&\\\angled{\just\dots, \nothing}&\\\angled{\nothing, \just\dots}&\end{cases}\\
 		\nothing   &\oplus \nothing            & &\mspace{-214mu}=  \nothing   \\
-		\just\incl &\oplus \nothing            & &\mspace{-214mu}=  \just\excl \\
-		\just\excl &\oplus \nothing            & &\mspace{-214mu}=  \just\incl \\
-		\nothing   &\oplus \just\incl          & &\mspace{-214mu}=  \just\excl \\
-		\nothing   &\oplus \just\excl          & &\mspace{-214mu}=  \just\incl \\
-		\langle\just\incl &, \just\incl\rangle & &\mspace{-214mu}\notin \dom_\oplus\\
-		\langle\just\incl &, \just\excl\rangle & &\mspace{-214mu}\notin \dom_\oplus\\
-		\langle\just\excl &, \just\incl\rangle & &\mspace{-214mu}\notin \dom_\oplus\\
-		\langle\just\excl &, \just\excl\rangle & &\mspace{-214mu}\notin \dom_\oplus
+		\just P &\oplus \nothing            & &\mspace{-214mu}=  \just{\lnot P} \\
+		\nothing   &\oplus \just P          & &\mspace{-214mu}=  \just{\lnot P} \\
+		\langle\just\dots &, \just\dots\rangle & &\mspace{-214mu}\notin \dom_\oplus
 	\end{align*}
 
-	\subsection{Permanenciaelv}
+	Mivel a $\oplus$ segédfüggvény jól láthatóan parciális függvény (pontosabban szólva értelmzési tartománya bonyolult összetételű), ezért a belőle definiált $\mainfunA Nqk$ és $\mainfunB Nqk$ függvény is ,,parciális'' lesz, sőt ezek értelmezési tatománya szintén bonyolult lesz (majd látni fogjuk, afféle ,,lépcsős'' jellegű). Ez természetes: egyes szituációk késői körökben nmár nem fordulhatnak elő, mert már korábbi körök ,,kibuktatják'' őket.
 
-	Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$.
+	A későbbiekben terjedelmes táblázatok is lesznek. Ezek értékek felsorolása mellett utalni fognak arra is, ha valamely szituációk ,,kibuknak'' és a későbbiekben lehetetlenné válnak. A tömör jelölés érdekében a protokollfüggvények értelmezési tartományára bevezejük az alábbi ,,életfüggvény'' jelöléseket:
 
 	\begin{align}
-		\mainfunA N{-\infty}k &= \nothing\\
-		\mainfunB N{-\infty}k &= \nothing
+		\yesmainfunA Nqk &\iff \angled{N,q,k}\in\dom_{\mathwitch} \\
+		\yesmainfunB Nqk &\iff \angled{N,q,k}\in\dom_{\reversemathwitch} \\\intertext{illetve ezek tagadásait:}
+		\nomainfunA  Nqk &\iff \angled{N,q,k}\notin\dom_{\mathwitch} \\
+		\nomainfunB  Nqk &\iff \angled{N,q,k}\notin\dom_{\reversemathwitch}
 	\end{align}
+
+	\subsection{A rekurzió kiszámítása}
+
+
+
+	\subsection{Permanenciaelv}
 
 	\subsection{A párkommunikáció-elvonatkoztatás autonómiaelőfeltevése}
 
