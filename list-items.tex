@@ -132,7 +132,7 @@
 
 	\subsection{Egyszerűbb rávezető feladatok?}
 
-	Mivel fentebb láthattuk, hogy valamiféle rekurziós, redukciós lépés várható a megodás során, ezért megpróbáljuk az eredeti feladatot először egy rávezető egyszerűbb feladattal helyettesítni, pusztán afféle tpsztalatgyűjtés céljából. Több szempoont is eszünk bejuthat: 
+	Mivel fentebb láthattuk, hogy valamiféle rekurziós, redukciós lépés várható a megoldás során, ezért megpróbáljuk az eredeti feladatot először egy rávezető egyszerűbb feladattal helyettesítni, pusztán afféle tpsztalatgyűjtés céljából. Több szempoont is eszünk bejuthat: 
 
 	\begin{itemize}
 		\item Csökkentjük a ,,kör'' méretét (pl.~4 helyett 3, vagy 4 helyett 2)
@@ -195,7 +195,8 @@
 		\begin{itemize}
 			\item a $q = 0$ érték azt jelenti, hogy a kommunikáció épp most, és épp pont az adott aktornál kezdődött el (,,épp most lépett oda elsőként a király''). A $q = 1$ érték azt jelenti, hogy épp a második körbe lépett az adott aktor (,,épp most ért körbe egy teljes kört a király'').
 			\item A $q$ nem egyesével, hanem ,,felesével'' változik: a $q = \frac12$ azt jeleti, hogy a kommunikáció nem az aktuális, hanem a ,,társaktornál'' indult (a másik aktornál kezdett a király), és természetesen a $q = 1\frac12, 2\frac12 \dots$ jelentése, hogy már 1 (2, stb \dots) teljes kör lement ezen felül.
-			\item Formális jelentősége van a $q = -\infty$ lehetséges értéknek. Ez jelképezi a még soha meg nem szólított aktort: az aktor amaz állapotát, amikor a kommunkáció még el sem indult egyáltalán.
+			\item Formális jelentősége van a $q = -\infty$ lehetséges értéknek. Ez jelképezi a még soha meg nem szólított aktort: az aktor amaz állapotát, amikor a kommunkáció még el sem indult egyáltalán. Egyfajta permanenciaelv folytán (vithathatóan) megkönnyít egyes definíciókat, specifikációkat, de ki lehet küszöböni a használatát.
+			\item $q = +\infty$ érték bevezetésének más okból lenne értelme: akkor lenne értelme, ha vizsgálnánk azokat a lehetetlennek bizonyuló szituációkat, meg nem történő kimeneteleket is, amelyeket az aktor-pár, illetve a belőlük emergálódó rendszer tetszőleges számú kör után sem tud elérni (vagyis a király elengedi a 100-körös korlátot). Itt ebben a feladatban ilyesfajta értékkészlet- és egyéb vizsgálatok nem lesznek (bár az értelmezési tartományok vizsgálata igen), szóval $q = +\infty$ értéket nem használunk.
 		\end{itemize}
 		Összesítve: a lehetséges értékek tehát $q \in \setOf{-\infty, 0, \frac12, 1, 1\frac12\dots}$.
 
@@ -210,7 +211,7 @@
 			\item $\just\incl$: azt feleli a király kérdésére: ,,Megadom a választ:  a királylány a nyájjal van, hozzácsapódott!''. Ezzel meg is szakítja a kört, vége a kommunikációnak, a teljes rendszer protokollviselkedésének.
 			\item $\just\excl$: azt feleli a király kérdésére: ,,Megadom a választ:  a királylány nincs a nyájjal, elkóborolt!''. Ezzel meg is szakítja a kört, vége a kommunikációnak, a teljes rendszer protokollviselkedésének.
 		\end{itemize}
-		A válasz ,,adatszerkesete egyébként pontosan az, amit a funkcionális programnyelvek \texttt{Maybe}-ként (itt konkrétan \texttt{Maybe Bool}-ként) ábrázolnak:
+		A válasz ,,adatszerkezete'' egyébként pontosan az, amit a funkcionális programnyelvek \texttt{Maybe}-ként (itt konkrétan \texttt{Maybe Bool}-ként) ábrázolnak:
 		\begin{itemize}
 			\item A $\just{\dots}$ jelentése: akár $\just\incl$, akár $\just\excl$, szóval mindkettőre illeszkedő minta.
 			\item A $\hat\lnot$ jelentése: a $\just\dots$-on ,,átvetített'' (\texttt{map}-elt) logikai tagadás:
@@ -253,7 +254,7 @@
 
 	Mivel a $\oplus$ segédfüggvény jól láthatóan parciális függvény (pontosabban szólva értelmzési tartománya bonyolult összetételű), ezért a belőle definiált $\mainfunA Nqk$ és $\mainfunB Nqk$ függvény is ,,parciális'' lesz, sőt ezek értelmezési tatománya szintén bonyolult lesz (majd látni fogjuk, afféle ,,lépcsős'' jellegű). Ez természetes: egyes szituációk késői körökben nmár nem fordulhatnak elő, mert már korábbi körök ,,kibuktatják'' őket.
 
-	A későbbiekben terjedelmes táblázatok is lesznek. Ezek értékek felsorolása mellett utalni fognak arra is, ha valamely szituációk ,,kibuknak'' és a későbbiekben lehetetlenné válnak. A tömör jelölés érdekében a protokollfüggvények értelmezési tartományára bevezejük az alábbi ,,életfüggvény'' jelöléseket:
+	A későbbiekben terjedelmes táblázatok is lesznek. Ezek értékek felsorolása mellett utalni fognak arra is, ha valamely szituációk ,,kibuknak'' és a későbbiekben lehetetlenné válnak. A tömör jelölés érdekében a protokollfüggvények értelmezési tartományára bevezejük az alábbi ,,élőségi predikátum'' jelöléseket:
 
 	\begin{align}
 		\yesmainfunA Nqk &\iff \angled{N,q,k}\in\dom_{\mathwitch} \\
@@ -262,13 +263,10 @@
 		\nomainfunB  Nqk &\iff \angled{N,q,k}\notin\dom_{\reversemathwitch}
 	\end{align}
 
-	\subsection{A rekurzió kiszámítása}
+	\subsection{Az aktorpár szimmetriája, ,,autonómabb'', ,,emergensebbb'' viselkedés}
 
-
-
-	\subsection{Permanenciaelv}
-
-	\subsection{A párkommunikáció-elvonatkoztatás autonómiaelőfeltevése}
+	A feladat szempontjából (és sok más gyakorlatban érdekes helyzetben) az aktoroknak nem kell lényegesen különböző protokollalgoritmust használniuk, ,,programozhatják őket ugyanúgy is''.
+	Nyugodtan előfelttelezük a továbbiakban, hogy a  $\mainfunA Nqk$ és $\mainfunB Nqk$ függvény teljesen azonos: értékhozzárendeléseikben és persze értelmezési tartományukban is:
 
 	\begin{align}
 		\currymainfunA     &\equiv \currymainfunB     \\
@@ -276,111 +274,33 @@
 		\nomainfunA{}{}{}  &\equiv \nomainfunB{}{}{}
 	\end{align}
 
-	\subsection{Repeater-szabály, ,,Geisterbahnhof''-kísértetállomás}
-
-	\begin{displaymath}
-		\gbh Nqk = \nothing
-	\end{displaymath}
-
-	tetszőleges $N \in \mathbb N, q \in \setOf{-\infty, 0, \frac14, \frac12, \frac34, 1, 1\frac14, 1\frac12, 1\frac34, \dots}, k \in \setOf{0, \dots, N + 1}$ esetén: a kísértetállomás (repeater) nem is figyel ezekre az értékekre, mindenre $\nothing$ választ ad. Az ő feladata tehát csak a ,,továbbengedés.\footnote{A ,,Geisterbahnhof'' kifejezés az NDK idejéből származik, a Fallal megosztott Berlinből. A nyugat-berlini metró egyik vonala  egy rövid szakaszon az NDK-hoz tartozó kelet-berlini területen ment át. A két városrész közti megegyezéés értelmében az NDK megemngedte és üzemetette is az áthaladást, de a keleti szektorba tartozó állomásokat a közönség számára lezárta, ott a ,,nyugati'' szerelvényeknek csak áthaladni volt joguk, az utasok a lezárt, kísérteties, határőrség által őrzött állomásokat csak az ablakból láthatták. Ezeket a ,,csak továbbengedésre'' fentartott állomásokat nevezte a nyugatberlini köznyelv ,,Geisterbahnhof'' néven. Wikipédia-cikk (\href{https://en.wikipedia.org/wiki/Ghost_station}{link}), Youtube-videó (\href{https://www.youtube.com/watch?v=jSwbcCx8rfQ}{link}).}
-
-	\[
-		\mainfunext Nqk =
-		\begin{cases}
-			\mainfuncomm Nqk & \text{ha } k = -\infty, 0, \frac12, 1, 1\frac12\dots \text{szóval ha ,,egész-vagy-feles'' alakú}\\
-			\gbh Nqk \text{ amely } =\nothing & \text{ha } k = \frac14, \frac34, 1\frac14, 1\frac34, 2\frac14\dots \text{szóval ha ,,valódi negyedes'' alakú}
-		\end{cases}
-	\]
-
-	Ez alapján
-
-	\begin{table}[H]
-		\caption*{A $\currymainfunA$ és $\currymainfunB$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
-		\centering
-		\begin{tabular}{c||c|c|c|c|c|c|c|}
-				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
-		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
-		$\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
-		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
-		$\frac34$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
-			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
-		$1\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
-		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
-		$1\frac34$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
-			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
-		$2\frac14$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
-		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
-		$2\frac34$	&	\ylw		&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
-			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
-		$3\frac14$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
-		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
-		$3\frac34$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
-		\end{tabular}
-	\end{table}
-
-	Van azonban egy másik lehetőség is $\mainfunext{}{}{}$ definiálására: a függvényt rekurzívan definiáljuk, ugyanabban a stílusban, ahogy eredetileg $\mainfuncomm{}{}{}$ függvényt, és nagyjából ugyanazon elvek alapján (szinte megismételjük az ott tett rekurziós felépítést, csak itt immár $\mainfunext{}{}{}$ függvényre értve):
-
-	%Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:
-
-	\begin{align}
-		\intertext{Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:}
-		\mainfunext N{-\infty}k &= \nothing
-	%\end{align}
-		\\\intertext{Legyen $N \in \mathbb N; q \in \setOf{0, \frac14, \frac12, \frac34}$:}
-	%\begin{align}
-		\mainfunext Nq{N+1} &= \just\incl
-	%\end{align}
-		\\\intertext{Legyen $N \in \mathbb N; q \in \setOf{0, \frac14, \frac12, \frac34, 1, 1\frac14, 1\frac12, 1\frac34 \dots}; k \in \setOf{0, \dots, N}$:}
-	%\begin{align}
-		\mainfunext Nqk &= \oplus\begin{cases}\displaystyle\mainfunext N{q-\frac12}{N-k}&\\\\\displaystyle\mainfunext N{q-\frac12}{N-k+1}&\end{cases}
-	\end{align}
+	%A protokollfüggvény tulajdonsága, hogy tagjaira szimmetrikus ($0, 1, 2, 3,4$) és 
+	%\[\mainfunA4{-\infty}5, \yesmainfunA4{-\infty}5, \nomainfunA4{-\infty}5\]
 
 
+	\subsection{A rekurzió kiszámítása}
 
-	\begin{table}[H]
-		\caption*{A $\currymainfunA$ és $\currymainfunB$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
-		\centering
-		\begin{tabular}{c||c|c|c|c|c|c|c|}
-				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
-		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
-		$\frac14$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
-		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
-		$\frac34$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
-			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
-		$1\frac14$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
-		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
-		$1\frac34$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
-			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
-		$2\frac14$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
-		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
-		$2\frac34$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
-			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
-		$3\frac14$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
-		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
-		$3\frac34$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
-		\end{tabular}
-	\end{table}
+	A $\mainfunA Nqk$ és $\mainfunB Nqk$ relatív alprotokollfüggvény-párost azért építettük fel így, mert szeretnénk, hogy \emph{jóslóerejűek} legyenek: a belőlük emergensen kielelkedő teljes rendszer kiszámítható ,,abszolút'' protokolltáblázatából már mindenfajta lehetséges birkapasrtícióra és királylányhelyzetre lehessenk következtetni, legalább megkötés nélküli kör után ($+\infty$), de lehetőleg a (király által) megadott erőforrás-korlátokon belül is. Az előfordulható belső szituációkat az értelmezési tartomány mutatja ($\yesmainfunA4 Nqk$ élőségi és $\nomainfunA Nqk$ lehetetlenségi predikátum).
 
-	Egy későbbi formalizmust előrebocsátva, ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfunA Nqk = \nothing$, és $\nomainfun1jn$ ha $\nomainfunA Nqk \lor \mainfunA Nqk = \just\incl \lor \mainfunA Nqk = \just\excl$.
+	A rekurziós lépések rendre a két aktor közti egyfajta komplementaritásra, illetve annak indeterminizmusára, ,,holtjátékára'' épülnek:
+	\begin{align*}
+		\intertext{$N = 4$ bárány esetén}
+		0 &\mapsto \setOf{4; 5}\\
+		&\vdots\\
+		4 &\mapsto \setOf{0; 1}\\
+		5 &\mapsto \setOf{0}\\
+		\\\intertext{illetve $N = 100$ bárány esetén}
+		0 &\mapsto \setOf{100; 101}\\
+		&\vdots\\
+		100 &\mapsto \setOf{0; 1}\\
+		101 &\mapsto \setOf{0}
+	\end{align*}
 
-	\section{Formalizmus}
+	Lássunk neki a rekurzió kiszámításának. A teljes számítást el fogjuk végezni, de itt most csak az $N = 4$ esetre.
 
-	\subsection{Alapfogalmak}
+	A rekurziós lépés $\oplus$ kombináló segédfüggvényét itt a $\text{\bf mert}$ szó (szinonimaként a $\text{\bf mert}_\frac12$ szó is) fogja jelölni. Lesz majd egy $\text{\bf mert}_\frac12$ féle érvelés is mutatva, de ez levelezhető a sima $\text{\bf mert}$ ($\text{\bf mert}_\frac12$) szabályból, léte redundáns, afféle gyorszabály: a táblázatok áttekintését majd meg fogja könnyíteni.
 
-	A kommunikáció nyelvtana: a \emph{protokollfüggvény}. Elsőként \emph{relatív} protkollfüggyvényeket fogunk használni, amelyek egy aktorra, szerelőre vonatkozóan adják meg a protokoll szabályait: ,,ha ennyi bárányt látsz magad körül, és ilyen előzményekre emlékszel (hányadik kör melyik fázisában vagy épp, milyen régen kezdtetek), akkor válaszolj így meg így''.
-
-	Ha mind a négy legény rendre a számára adott relatív protokollfüggvény szerint vselkedik, akkor alakul ki afféle ,,emergens jelenségként'' a teljes viselkedés, ami révén együttesen képesk helyesen megfelelni a királynak mindenféle lehetséges esetben.
-
-	Az így kiboontakozó problémamegoldó rendszert jellemezhetjük determinisztikusbban is: nem egyéni protokollok emergens eredőjeként, hanem magát az egész viselkedést egyetlen táblázattal, fekete dobozként, tekintet nélkül az annak részeit alkotó egyéni aktorok szemszögére. A megoldást jelető protokollt ílyen ,,külső szemmel'' megadó függvény az \emph{abszolút protokollfüggvény}.
-
-	\subsection{Relatív protokollfüggvény}
-
-	A $\mainfunA4{-\infty}5$ relatív protokollfüggvényt úgy fogjuk felépíteni, hogy \emph{jóslóerejű} legyen: egyáltalán ($+\infty$), sőt a megadott korlátokon belül is ($2\frac12, 2, 1\frac12, 1, \frac12, 0, -\infty$). Értelmezési tartományát az $\yesmainfunA4{-\infty}5$ \emph{élőségi predikátum} határolja be, ennek ellentéte, logikai negáltja a $\nomainfunA4{-\infty}5$ \emph{lehetetlenségi predikátum}. Értékkészlete Maybe-algebrájú: $\nothing$ mint továbbengedés, vagy azonnali válasz $\just\incl$ és $\just\excl$ lehetőséggel. A protokollfüggvény tulajdonsága, hogy tagjaira szimmetrikus ($0, 1, 2, 3,4$) és rekurziója egyfajta komplementaritásra, illetve annak indeterminizmusára, ,,holtjátékára'' épül ($0 \mapsto 4, 5 \bullet \dots \bullet 4 \mapsto 0, 1$).
-
-	\[\mainfunA4{-\infty}5, \yesmainfunA4{-\infty}5, \nomainfunA4{-\infty}5\]
-
+	
 	\begin{align*}
 		\mainfunA4{-\infty}0 &= \nothing \\
 		\mainfunA4{-\infty}1 &= \nothing \\
@@ -470,6 +390,150 @@
 		&                &&\text{, mert}_1\nomainfunA425
 	\end{align*}
 
+	Ezzel megvagyunk.
+
+	\subsection{Értéktáblázat}
+
+	Foglaljuk össze a kiszámított értékeket, táblázatosan elrendezve:
+
+	\begin{table}[H]
+		\caption*{$\currymainfunA$ (és a vele azonos $\currymainfunB$) relatív alprotokollfüggvény értéktáblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
+
+	\section{A párkommunikációra elvonatkoztató modellből való visszatérés az eredeti 4-aktoros körre}
+
+	A feladatban természetesen 4 testvér szerepel. Ezért modellezésben való továbblépéshez szükséges, hogy 4 aktor viselkedését modellezzük.
+	Mivel az eddigi modellünk 2-aktoros volt, meg kell oldanunk a két modellezési szint közötti hozzárendeléseket.
+
+	Természetesen a kétaktoros modell két elvont aktorát az eredeti testvérek közt úgy osztuk ki, hogy a kezdő testvér (akihez legelőször odalép a király) lesz az egyik aktor (akkor a $\mainfunA{}{}{}$ ír le, a $\mainfunB{}{}{}$ pedig a kezdő testvérrel szemben lévő testvér lesz. De mi legyen a másik két testévérrel (akik a kezdő testvérrel szomszédosak)?
+
+	\subsection{2 új ,,repeater''-aktor, kísértetállomás}
+
+	A legegyszerűbb megközeltés az, ha megpróbáljuk minél hűbben megőrizni a kétaktoros modell egyszerűségét. Ezért a két ,,új'' aktort csak módfelett ,,lebutított'' formában engedjük be: a ,,fő'' aktorok közti kommunikációs ,,csatornába'' olvadnak be, elírásuk csak arra korlátozódik, hogy egy erre a szerepre korlátozódó megbízható szolgai ,,továbbengedő'' viselkedést deklaráljon.
+	Afféle ,,repeater''-ek lesznek, bár ezt a feladat jellegének megfelelően nem ,,ismétléssel'', hanem szolgai ,,Nem tudom!'' válaszokkal lehet modellezni: ők mindig továbbengedik a kört, továbpasszolják a labdát, a ,,protokolltokent'': ,,kísértetállomások'' lesznek.\footnote{A ,,Geisterbahnhof'' kifejezés az NDK idejéből származik, a Fallal megosztott Berlinből. A nyugat-berlini metró egyik vonala  egy rövid szakaszon az NDK-hoz tartozó kelet-berlini területen ment át. A két városrész közti megegyezéés értelmében az NDK megengedte és  üzemeltette is a szerelvények áthaladását, de a keleti szektorba tartozó állomásokat a közönség számára lezárta, ott a ,,nyugati'' szerelvényeknek csak áthaladni volt joguk: az utasok a lezárt, kísérteties, határőrség által őrzött állomásokat csak az ablakból láthatták. Ezeket a ,,csak továbbengedésre'' fentartott állomásokat nevezte a nyugatberlini köznyelv ,,Geisterbahnhof'' néven. Wikipédia-cikk (\href{https://en.wikipedia.org/wiki/Ghost_station}{link}), Youtube-videó (\href{https://www.youtube.com/watch?v=jSwbcCx8rfQ}{link}).}
+
+	Ezt a viselkedést tehát matematikailag a
+	
+	\begin{align*}
+		\gbh Nqk &= \nothing\\\intertext{függvény deklarálja, ahol}
+		N &\in \mathbb N\\
+		q &\in \setOf{-\infty, 0, \frac14, \frac12, \frac34, 1, 1\frac14, 1\frac12, 1\frac34, \dots}\\
+		k &\in \setOf{0, \dots, N + 1}
+	\end{align*}
+
+	a leírás pontosan azt viselkedést rögzíti, amit a két új kísértetállomástól elvárunk: a ,,kísértetállomás'' (félreérthető hasonlatként ,,repeater'') nem is figyel argumentumainak értékére, mindenre konstans $\nothing$ választ ad. Az ő feladata tehát tényleg pontosan a ,,továbbengedés''.
+
+	\subsection{A (4 aktorra) kiterjesztett relatív protokollfüggvény}
+
+	A $q$ paraméter (eddig megtett menetszám) felvehető értéki szintén kibővültek: már ,,negyedes'' (4-es nevezőjű) törtértékeket is fölvehet. Ennek indítéka, hogy e ,,kísértetállomás''-szabályt be lehessen illeszteni az alábbiakban megadandó \emph{kibővített} relatív protokollfüggvény definíciójába:
+
+	\[
+		\mainfunext Nqk =
+		\begin{cases}
+			\mainfuncomm Nqk & \text{ha } k = -\infty, 0, \frac12, 1, 1\frac12\dots \text{szóval ha ,,egész-vagy-feles'' alakú}\\
+			\gbh Nqk \text{ amely } =\nothing & \text{ha } k = \frac14, \frac34, 1\frac14, 1\frac34, 2\frac14\dots \text{szóval ha ,,valódi negyedes'' alakú}
+		\end{cases}
+	\]
+
+	Ez alapján
+
+	\begin{table}[H]
+		\caption*{A $\mainfunext{}{}{}$ kiterjesztett relatív protokollfüggvény értéktáblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\ylw		&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		\end{tabular}
+	\end{table}
+
+	Van azonban egy másik lehetőség is $\mainfunext{}{}{}$ definiálására: a függvényt rekurzívan definiáljuk, ugyanabban a stílusban, ahogy eredetileg $\mainfuncomm{}{}{}$ függvényt, és nagyjából ugyanazon elvek alapján (szinte megismételjük az ott tett rekurziós felépítést, csak itt immár $\mainfunext{}{}{}$ függvényre értve):
+
+	%Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:
+
+	\begin{align}
+		\intertext{Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:}
+		\mainfunext N{-\infty}k &= \nothing
+	%\end{align}
+		\\\intertext{Legyen $N \in \mathbb N; q \in \setOf{0, \frac14, \frac12, \frac34}$:}
+	%\begin{align}
+		\mainfunext Nq{N+1} &= \just\incl
+	%\end{align}
+		\\\intertext{Legyen $N \in \mathbb N; q \in \setOf{0, \frac14, \frac12, \frac34, 1, 1\frac14, 1\frac12, 1\frac34 \dots}; k \in \setOf{0, \dots, N}$:}
+	%\begin{align}
+		\mainfunext Nqk &= \oplus\begin{cases}\displaystyle\mainfunext N{q-\frac12}{N-k}&\\\\\displaystyle\mainfunext N{q-\frac12}{N-k+1}&\end{cases}
+	\end{align}
+
+
+
+	\begin{table}[H]
+		\caption*{A $\currymainfunA$ és $\currymainfunB$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
+
+	Egy későbbi formalizmust előrebocsátva, ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfunA Nqk = \nothing$, és $\nomainfun1jn$ ha $\nomainfunA Nqk \lor \mainfunA Nqk = \just\incl \lor \mainfunA Nqk = \just\excl$.
+
+	\section{Formalizmus}
+
+	\subsection{Alapfogalmak}
+
+	A kommunikáció nyelvtana: a \emph{protokollfüggvény}. Elsőként \emph{relatív} protkollfüggyvényeket fogunk használni, amelyek egy aktorra, szerelőre vonatkozóan adják meg a protokoll szabályait: ,,ha ennyi bárányt látsz magad körül, és ilyen előzményekre emlékszel (hányadik kör melyik fázisában vagy épp, milyen régen kezdtetek), akkor válaszolj így meg így''.
+
+	Ha mind a négy legény rendre a számára adott relatív protokollfüggvény szerint vselkedik, akkor alakul ki afféle ,,emergens jelenségként'' a teljes viselkedés, ami révén együttesen képesk helyesen megfelelni a királynak mindenféle lehetséges esetben.
+
+	Az így kiboontakozó problémamegoldó rendszert jellemezhetjük determinisztikusbban is: nem egyéni protokollok emergens eredőjeként, hanem magát az egész viselkedést egyetlen táblázattal, fekete dobozként, tekintet nélkül az annak részeit alkotó egyéni aktorok szemszögére. A megoldást jelető protokollt ílyen ,,külső szemmel'' megadó függvény az \emph{abszolút protokollfüggvény}.
+
+	\subsection{Relatív protokollfüggvény}
+
+
 
 	\section{Relatív táblák}
 
@@ -489,22 +553,6 @@
 
 	Ezt fejezi ki a leszűkített relatív tábla:
 
-	\begin{table}[H]
-		\caption*{$\currymainfunA$ és $\currymainfunB$ relatív táblázata: a 0-s és a 2-es testvér szerepe szimmetrikus a relatív reprezentációban}
-		\centering
-		\begin{tabular}{c||c|c|c|c|c|c|c|}
-				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
-		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
-			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
-		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
-			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
-		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
-			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
-		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
-			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
-		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
-		\end{tabular}
-	\end{table}
 
 	\section{Kiterjesztett reltábla: a párkommunikáció-elvonatkoztatásból való visszalépés}
 
