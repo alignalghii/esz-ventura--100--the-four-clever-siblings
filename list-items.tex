@@ -422,6 +422,8 @@
 
 	\subsection{2 új ,,repeater''-aktor, kísértetállomás}
 
+	%Egy későbbi formalizmust előrebocsátva, ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfunA Nqk = \nothing$, és $\nomainfun1jn$ ha $\nomainfunA Nqk \lor \mainfunA Nqk = \just\incl \lor \mainfunA Nqk = \just\excl$.
+
 	A legegyszerűbb megközeltés az, ha megpróbáljuk minél hűbben megőrizni a kétaktoros modell egyszerűségét. Ezért a két ,,új'' aktort csak módfelett ,,lebutított'' formában engedjük be: a ,,fő'' aktorok közti kommunikációs ,,csatornába'' olvadnak be, elírásuk csak arra korlátozódik, hogy egy erre a szerepre korlátozódó megbízható szolgai ,,továbbengedő'' viselkedést deklaráljon.
 	Afféle ,,repeater''-ek lesznek, bár ezt a feladat jellegének megfelelően nem ,,ismétléssel'', hanem szolgai ,,Nem tudom!'' válaszokkal lehet modellezni: ők mindig továbbengedik a kört, továbpasszolják a labdát, a ,,protokolltokent'': ,,kísértetállomások'' lesznek.\footnote{A ,,Geisterbahnhof'' kifejezés az NDK idejéből származik, a Fallal megosztott Berlinből. A nyugat-berlini metró egyik vonala  egy rövid szakaszon az NDK-hoz tartozó kelet-berlini területen ment át. A két városrész közti megegyezéés értelmében az NDK megengedte és  üzemeltette is a szerelvények áthaladását, de a keleti szektorba tartozó állomásokat a közönség számára lezárta, ott a ,,nyugati'' szerelvényeknek csak áthaladni volt joguk: az utasok a lezárt, kísérteties, határőrség által őrzött állomásokat csak az ablakból láthatták. Ezeket a ,,csak továbbengedésre'' fentartott állomásokat nevezte a nyugatberlini köznyelv ,,Geisterbahnhof'' néven. Wikipédia-cikk (\href{https://en.wikipedia.org/wiki/Ghost_station}{link}), Youtube-videó (\href{https://www.youtube.com/watch?v=jSwbcCx8rfQ}{link}).}
 
@@ -436,9 +438,9 @@
 
 	a leírás pontosan azt viselkedést rögzíti, amit a két új kísértetállomástól elvárunk: a ,,kísértetállomás'' (félreérthető hasonlatként ,,repeater'') nem is figyel argumentumainak értékére, mindenre konstans $\nothing$ választ ad. Az ő feladata tehát tényleg pontosan a ,,továbbengedés''.
 
-	\subsection{A (4 aktorra) kiterjesztett relatív protokollfüggvény}
+	\subsubsection{A (4 aktorra) kiterjesztett relatív protokollfüggvény}
 
-	A $q$ paraméter (eddig megtett menetszám) felvehető értéki szintén kibővültek: már ,,negyedes'' (4-es nevezőjű) törtértékeket is fölvehet. Ennek indítéka, hogy e ,,kísértetállomás''-szabályt be lehessen illeszteni az alábbiakban megadandó \emph{kibővített} relatív protokollfüggvény definíciójába:
+	A $q$ paraméter (eddig megtett menetszám) felvehető értéki szintén kibővültek: már ,,negyedes'' (4-es nevezőjű) törtértékeket is fölvehet. Ennek indítéka, hogy e ,,kísértetállomás''-szabályt be lehessen illeszteni az alábbiakban megadandó \emph{kiterjesztett} relatív protokollfüggvény definíciójába:
 
 	\[
 		\mainfunext Nqk =
@@ -448,7 +450,8 @@
 		\end{cases}
 	\]
 
-	Ez alapján
+	Ez alapvetően  ,,esetszétválasztós'' definícó: a $\mainfunext Nqk$ kiterjesztett függvényt egyrészt a régi főaktorokat leíró ,,régi'' $\mainfuncomm Nqk$ függvény, részben az új kísértetállomásaktorokat leíró $\gbh Nqk$ függvény alapján ,,rakjuk össze'', egyfajta alternáló esetszétválasztással: a $q$ argumentum értékének ,,negyedes-paritása'' alapján váltakozva.
+	Ez a definíció tehát nem rekurzív, és az alábbi értéktáblázat mutatja is az alternáló esetszétválasztást (a szellemállomásokat sárga szín jelzi):
 
 	\begin{table}[H]
 		\caption*{A $\mainfunext{}{}{}$ kiterjesztett relatív protokollfüggvény értéktáblázata}
@@ -475,27 +478,41 @@
 		\end{tabular}
 	\end{table}
 
-	Van azonban egy másik lehetőség is $\mainfunext{}{}{}$ definiálására: a függvényt rekurzívan definiáljuk, ugyanabban a stílusban, ahogy eredetileg $\mainfuncomm{}{}{}$ függvényt, és nagyjából ugyanazon elvek alapján (szinte megismételjük az ott tett rekurziós felépítést, csak itt immár $\mainfunext{}{}{}$ függvényre értve):
+	\subsection{,,Autonómabb'' aktorbővítés --- aktorok egyenrangúsága}
+
+	Jogosan bírálható a fenti megközelítés: a mód, ahogy a kétaktoros modellt négyaktorossá bővítettük.
+	Természetesebbnek hat az, ha az új aktorok teljesen egyenrangúak a korábbi főaktorokkal, sőt, akár az egyes aktorok használhatnak teljesen ugyanolyan belső programot, protokollfüggvényt is.
+	Ez közelebb áll azokhoz a jelenségekhez is, amelyekben a fizika vizsgálja emergens struktúrák kialakulását: madárrajok, embertömegek (szurkolók hullámban terjedő mintázatai, menekülő tömeg, termeszhangyák várépítése).
+
+	A fő ötlet az, hogy a két ,,új'' aktor ,,egyenjogusítása'': ne legyenek passzív szellemállomás-szerepre kárhoztatva, hanem ők egymás közt éppúgy kommunikáló párost alkotnak, mint ahogy a kétaktoros modell eredeti főaktorai.
+
+	Matematikailag ez azt jelenti, hogy a $\mainfunext Nqk$ definiálására nem az elébbi
+
+	\[
+		\mainfunext Nqk =
+		\begin{cases}
+			\mainfuncomm Nqk & \text{ha } k = -\infty, 0, \frac12, 1, 1\frac12\dots \text{szóval ha ,,egész-vagy-feles'' alakú}\\
+			\gbh Nqk \text{ amely } =\nothing & \text{ha } k = \frac14, \frac34, 1\frac14, 1\frac34, 2\frac14\dots \text{szóval ha ,,valódi negyedes'' alakú}
+		\end{cases}
+	\]
+
+	$q$-alternáló esetszétválasztós definíciót használjuk, hanem az új $\mainfunext Nqk$ függvényt ugyanúgy rekurzívan definiáljuk, ahogy a ,,régi'' $\mainfuncomm{}{}{}$ függvényt, és nagyjából ugyanazon elvek alapján (szinte megismételjük az ott tett rekurziós felépítést, csak itt immár $\mainfunext Nqk$ függvényre értve):
 
 	%Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:
 
 	\begin{align}
 		\intertext{Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:}
 		\mainfunext N{-\infty}k &= \nothing
-	%\end{align}
 		\\\intertext{Legyen $N \in \mathbb N; q \in \setOf{0, \frac14, \frac12, \frac34}$:}
-	%\begin{align}
 		\mainfunext Nq{N+1} &= \just\incl
-	%\end{align}
 		\\\intertext{Legyen $N \in \mathbb N; q \in \setOf{0, \frac14, \frac12, \frac34, 1, 1\frac14, 1\frac12, 1\frac34 \dots}; k \in \setOf{0, \dots, N}$:}
-	%\begin{align}
 		\mainfunext Nqk &= \oplus\begin{cases}\displaystyle\mainfunext N{q-\frac12}{N-k}&\\\\\displaystyle\mainfunext N{q-\frac12}{N-k+1}&\end{cases}
 	\end{align}
 
-
+	A $\oplus$ segédfüggvény maradhat teljesen ugyanaz, viszont ami fent definiélt függvényt illeti: a $q$ paraméter lehetséges értékei itt is kibővültek a ,,negyedes értékekkel.
 
 	\begin{table}[H]
-		\caption*{A $\currymainfunA$ és $\currymainfunB$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
+		\caption*{Az egymással egyenrangú aktorokkal való kiterjesztés értéktáblázata}
 		\centering
 		\begin{tabular}{c||c|c|c|c|c|c|c|}
 				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
@@ -519,7 +536,10 @@
 		\end{tabular}
 	\end{table}
 
-	Egy későbbi formalizmust előrebocsátva, ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfunA Nqk = \nothing$, és $\nomainfun1jn$ ha $\nomainfunA Nqk \lor \mainfunA Nqk = \just\incl \lor \mainfunA Nqk = \just\excl$.
+	Látható a mintázatból, hogy itt az aktorok tényleg egyenrangúak egymással, és egséges módon történik szereposztásuk.
+
+	\section{Az abszolút protokollfüggvény}
+
 
 	\section{Formalizmus}
 
