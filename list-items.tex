@@ -20,6 +20,7 @@
 \newcommand{\gry}{\cellcolor{lightgray}}
 \newcommand{\red}{\cellcolor{red!33}}
 \newcommand{\grn}{\cellcolor{green!33}}
+\newcommand{\ylw}{\cellcolor{yellow}}
 
 \newcommand{\nothing}{\text{\raisebox{0.4em}{\rotatebox{180}{$\curvearrowleft$}}}}%{\mathbf{nothing}}
 \newcommand{\just}[1]{\boxed{#1}}%{\mathbf{just}}
@@ -28,6 +29,9 @@
 \newcommand{\excl}{\mathbf{excl}}
 \newcommand{\parenthetical}[1]{\left(#1\right)}
 \newcommand{\angled}[1]{\left\langle#1\right\rangle}
+\newcommand{\setOf}[1]{\left\lbrace\,#1\,\right\rbrace}
+
+\newcommand{\eye}{\bigtriangleup\mspace{-14.607mu}\divideontimes}
 
 \newcommand{\mainfun}[3]{\mathwitch_{#1}^{#2}#3}
 \newcommand{\yesmainfun}[3]{\bigpumpkin_{#1}^{#2}#3}
@@ -38,6 +42,22 @@
 \newcommand{\yesmainfunabs}[3]{\overbat{\bigpumpkin_{#1}^{#2}#3}}
 \newcommand{\nomainfunabs}[3]{\overbat{\bigskull_{#1}^{#2}#3}}
 \newcommand{\currymainfunabs}[1]{\overbat{\mathwitch*_{#1}}}
+
+\newcommand{\mainfunA}[3]{\mathwitch_{#2}^{#1}#3}
+\newcommand{\mainfunB}[3]{\reversemathwitch_{#2}^{#1}#3}
+\newcommand{\nomainfunA}[3]{{}_{\mathwitch}\!\!\!\!\bigskull^{#1}_{#2}#3}
+\newcommand{\nomainfunB}[3]{{}_{\reversemathwitch}\!\!\!\!\bigskull^{#1}_{#2}#3}
+\newcommand{\yesmainfunA}[3]{{}_{\mathwitch}\!\!\!\!\bigpumpkin^{#1}_{#2}#3}
+\newcommand{\yesmainfunB}[3]{{}_{\reversemathwitch}\!\!\!\!\bigpumpkin^{#1}_{#2}#3}
+\newcommand{\currymainfunA}{\mathwitch}
+\newcommand{\currymainfunB}{\reversemathwitch}
+
+\newcommand{\mainfuncomm}[3]{\mathwitch_{#2}^{#1}#3}
+\newcommand{\mainfunext}[3]{\left\uparrow\!\!\!\mathwitch*_{#2}^{#1}#3\right.}
+
+\newcommand{\gbh}[3]{\mathop{\mathghost}^{#1}_{#2}#3}
+
+\DeclareMathOperator{\combine}{combine}
 
 \newcommand{\storm}{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning\mspace{20mu}}
 
@@ -50,6 +70,7 @@
 \setlength{\extrarowheight}{4px}
 
 \usepackage{comment}
+\usepackage{hyperref}
 
 \title{100. feladvány}
 \author{Endrey Márk}
@@ -100,105 +121,260 @@
 	\subsubsection{$4 + 1$ helyett $3 +1$}
 
 
-	\section{A párkommunikáció-elvonatkoztatás}
+	\section{A párkommunikációra elvonatkoztató protokoll}
 
-	\subsection{Repeater-szabályok}
+	Fontos látni, hogy a párkommunikációra elvonatkoztató protokoll teljes mértékben semmiképp sem lehet egyenrangú a lehetséges optimális protokollokkal.
 
-	Egy későbbi formalizmust előrebocsátva, ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfun0jn = \nothing$, és $\nomainfun1jn$ ha $\nomainfun0jn \lor \mainfun0jn = \just\incl \lor \mainfun0jn = \just\excl$.
+	Például, ha az induló (első) legény és az első legény közti mezőn két bárány van, az második és a harmadik közt pedig három, akkor a második legény azonnal észlehetné, hogy ő összesen öt bárányt lát, ami nagyobb, mint a nyáj teljes létszáma (4), tehát a királylány szükségszerűen a nyájban van.
+
+	A párkommunikációra elvonatkoztató protokoll szerint viszont az első és a harmadik legény közt zajlik az  érdemi protokoll, a második legény pedig mindenre csak azt mondja, ,,nem tudom'', és ezáltal lényegében csak passzívan továbbadja a kört az első legénytől a vele szemben lévő harmadik legyén felé. Ugyanilyen passzív továbbitó szerepet tölt be a negyedik legény is, aki a harmadik legénytől továbbít az első legény felé. Az érdemi protokollkommunikáció tehát az első és a vele szembenlevő harmadik legény közt zajlik, akik majd a kiegészítés-elv alapján sokadik körben majd kitalálják, hogy öt bárány van, a királylány tehát nem kóborolt el. Amit a második legény azonnal ki tudott volna találni, ha nem kényszerült volna passzív szerepre.
+
+	A párkommunikációra elvonatkoztató protokoll tehát semmiképp sem optimális erőforrásigényű általános esetben: nem használja ki optimálisan a rendelkezésre álló információt, erődorrást pazarol. Azonban ez azon múlt, hogy az egyik legénynél szélsőségesen jó helyzetben volt. Kiegyensúlyozottabb, homogénebb esetben (minden bárány egyenletesen van elosztva a négy mező közt) kisebb is lehet az  hátrány, amit párkommunikációra elvonatkoztató protokoll információ-és erőforráspazarlása okoz: sőt még az is lehetséges, hogy az ilyen homogén esetekben ez  protokoll optimális tud lenni.
+
+	Protokollszumma, protokoll-koszumma és a társelőzménylehetőség-kombináló. (,,Boszorkányszumma, ellenboszorkányszumma'').
+
+	\subsection{Azonnali érték}
+
+	Legyen $N \in \mathbb N; q \in \setOf{0, \frac12}$.
+
+	\begin{align}
+		\mainfunA Nq{N+1} &= \just\incl\\
+		\mainfunB Nq{N+1} &= \just\incl
+	\end{align}
+
+
+	\subsection{Kiegészítéses számítás}
+
+	Legyen $N \in \mathbb N; q \in \setOf{0, \frac12, 1, 1\frac12\dots}; k \in \setOf{0, \dots, N}$
+
+	\begin{align}
+		\mainfunA Nqk &= \oplus\begin{cases}\displaystyle\mainfunB N{q-\frac12}{N-k}&\\\displaystyle\mainfunB N{q-\frac12}{N-k+1}&\end{cases}\\
+		\mainfunB Nqk &= \oplus\begin{cases}\displaystyle\mainfunA N{q-\frac12}{N-k}&\\\displaystyle\mainfunA N{q-\frac12}{N-k+1}&\end{cases}
+	\end{align}
+
+	\begin{align*}
+		\oplus &: \text{Válasz} \times \text{Válasz} \to \text{Válasz}\\
+		\dom_\oplus &= \begin{cases}\angled{\nothing, \nothing}&\\\angled{\just\incl, \nothing}&\\\angled{\just\excl, \nothing}&\\\angled{\nothing, \just\incl}&\\\angled{\nothing, \just\excl}&\end{cases}\\
+		\nothing   &\oplus \nothing            & &\mspace{-214mu}=  \nothing   \\
+		\just\incl &\oplus \nothing            & &\mspace{-214mu}=  \just\excl \\
+		\just\excl &\oplus \nothing            & &\mspace{-214mu}=  \just\incl \\
+		\nothing   &\oplus \just\incl          & &\mspace{-214mu}=  \just\excl \\
+		\nothing   &\oplus \just\excl          & &\mspace{-214mu}=  \just\incl \\
+		\langle\just\incl &, \just\incl\rangle & &\mspace{-214mu}\notin \dom_\oplus\\
+		\langle\just\incl &, \just\excl\rangle & &\mspace{-214mu}\notin \dom_\oplus\\
+		\langle\just\excl &, \just\incl\rangle & &\mspace{-214mu}\notin \dom_\oplus\\
+		\langle\just\excl &, \just\excl\rangle & &\mspace{-214mu}\notin \dom_\oplus
+	\end{align*}
+
+	\subsection{Permanenciaelv}
+
+	Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$.
+
+	\begin{align}
+		\mainfunA N{-\infty}k &= \nothing\\
+		\mainfunB N{-\infty}k &= \nothing
+	\end{align}
+
+	\subsection{A párkommunikáció-elvonatkoztatás autonómiaelőfeltevése}
+
+	\begin{align}
+		\currymainfunA     &\equiv \currymainfunB     \\
+		\yesmainfunA{}{}{} &\equiv \yesmainfunB{}{}{} \\
+		\nomainfunA{}{}{}  &\equiv \nomainfunB{}{}{}
+	\end{align}
+
+	\subsection{Repeater-szabály, ,,Geisterbahnhof''-kísértetállomás}
+
+	\begin{displaymath}
+		\gbh Nqk = \nothing
+	\end{displaymath}
+
+	tetszőleges $N \in \mathbb N, q \in \setOf{-\infty, 0, \frac14, \frac12, \frac34, 1, 1\frac14, 1\frac12, 1\frac34, \dots}, k \in \setOf{0, \dots, N + 1}$ esetén: a kísértetállomás (repeater) nem is figyel ezekre az értékekre, mindenre $\nothing$ választ ad. Az ő feladata tehát csak a ,,továbbengedés.\footnote{A ,,Geisterbahnhof'' kifejezés az NDK idejéből származik, a Fallal megosztott Berlinből. A nyugat-berlini metró egyik vonala  egy rövid szakaszon az NDK-hoz tartozó kelet-berlini területen ment át. A két városrész közti megegyezéés értelmében az NDK megemngedte és üzemetette is az áthaladást, de a keleti szektorba tartozó állomásokat a közönség számára lezárta, ott a ,,nyugati'' szerelvényeknek csak áthaladni volt joguk, az utasok a lezárt, kísérteties, határőrség által őrzött állomásokat csak az ablakból láthatták. Ezeket a ,,csak továbbengedésre'' fentartott állomásokat nevezte a nyugatberlini köznyelv ,,Geisterbahnhof'' néven. Wikipédia-cikk (\href{https://en.wikipedia.org/wiki/Ghost_station}{link}), Youtube-videó (\href{https://www.youtube.com/watch?v=jSwbcCx8rfQ}{link}).}
+
+	\[
+		\mainfunext Nqk =
+		\begin{cases}
+			\mainfuncomm Nqk & \text{ha } k = -\infty, 0, \frac12, 1, 1\frac12\dots \text{szóval ha ,,egész-vagy-feles'' alakú}\\
+			\gbh Nqk \text{ amely } =\nothing & \text{ha } k = \frac14, \frac34, 1\frac14, 1\frac34, 2\frac14\dots \text{szóval ha ,,valódi negyedes'' alakú}
+		\end{cases}
+	\]
+
+	Ez alapján
+
+	\begin{table}[H]
+		\caption*{A $\currymainfunA$ és $\currymainfunB$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\ylw		&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		\end{tabular}
+	\end{table}
+
+	Van azonban egy másik lehetőség is $\mainfunext{}{}{}$ definiálására: a függvényt rekurzívan definiáljuk, ugyanabban a stílusban, ahogy eredetileg $\mainfuncomm{}{}{}$ függvényt, és nagyjából ugyanazon elvek alapján (szinte megismételjük az ott tett rekurziós felépítést, csak itt immár $\mainfunext{}{}{}$ függvényre értve):
+
+	%Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:
+
+	\begin{align}
+		\intertext{Legyen $N \in \mathbb N; k \in \setOf{0, \dots, N+1}$:}
+		\mainfunext N{-\infty}k &= \nothing
+	%\end{align}
+		\\\intertext{Legyen $N \in \mathbb N; q \in \setOf{0, \frac14, \frac12, \frac34}$:}
+	%\begin{align}
+		\mainfunext Nq{N+1} &= \just\incl
+	%\end{align}
+		\\\intertext{Legyen $N \in \mathbb N; q \in \setOf{0, \frac14, \frac12, \frac34, 1, 1\frac14, 1\frac12, 1\frac34 \dots}; k \in \setOf{0, \dots, N}$:}
+	%\begin{align}
+		\mainfunext Nqk &= \oplus\begin{cases}\displaystyle\mainfunext N{q-\frac12}{N-k}&\\\\\displaystyle\mainfunext N{q-\frac12}{N-k+1}&\end{cases}
+	\end{align}
+
+
+
+	\begin{table}[H]
+		\caption*{A $\currymainfunA$ és $\currymainfunB$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
+
+	Egy későbbi formalizmust előrebocsátva, ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfunA Nqk = \nothing$, és $\nomainfun1jn$ ha $\nomainfunA Nqk \lor \mainfunA Nqk = \just\incl \lor \mainfunA Nqk = \just\excl$.
 
 	\section{Formalizmus}
 
-	A kommunikáció nyelvtana: a \emph{protokollfüggvény}. A $\mainfun0{-\infty}5$ függvényt úgy fogjuk felépíteni, hogy \emph{jóslóerejű} legyen: egyáltalán ($+\infty$), sőt a megadott korlátokon belül is ($2\frac12, 2, 1\frac12, 1, \frac12, 0, -\infty$). Értelmezési tartományát az $\yesmainfun0{-\infty}5$ \emph{élőségi predikátum} határolja be, ennek ellentéte, logikai negáltja a $\nomainfun0{-\infty}5$ \emph{lehetetlenségi predikátum}. Értékkészlete Maybe-algebrájú: $\nothing$ mint továbbengedés, vagy azonnali válasz $\just\incl$ és $\just\excl$ lehetőséggel. A protokollfüggvény tulajdonsága, hogy tagjaira szimmetrikus ($0, 1, 2, 3,4$) és rekurziója egyfajta komplementaritásra, illetve annak indeterminizmusára, ,,holtjátékára'' épül ($0 \mapsto 4, 5 \bullet \dots \bullet 4 \mapsto 0, 1$).
+	\subsection{Alapfogalmak}
 
-	\[\mainfun0{-\infty}5, \yesmainfun0{-\infty}5, \nomainfun0{-\infty}5\]
+	A kommunikáció nyelvtana: a \emph{protokollfüggvény}. Elsőként \emph{relatív} protkollfüggyvényeket fogunk használni, amelyek egy aktorra, szerelőre vonatkozóan adják meg a protokoll szabályait: ,,ha ennyi bárányt látsz magad körül, és ilyen előzményekre emlékszel (hányadik kör melyik fázisában vagy épp, milyen régen kezdtetek), akkor válaszolj így meg így''.
+
+	Ha mind a négy legény rendre a számára adott relatív protokollfüggvény szerint vselkedik, akkor alakul ki afféle ,,emergens jelenségként'' a teljes viselkedés, ami révén együttesen képesk helyesen megfelelni a királynak mindenféle lehetséges esetben.
+
+	Az így kiboontakozó problémamegoldó rendszert jellemezhetjük determinisztikusbban is: nem egyéni protokollok emergens eredőjeként, hanem magát az egész viselkedést egyetlen táblázattal, fekete dobozként, tekintet nélkül az annak részeit alkotó egyéni aktorok szemszögére. A megoldást jelető protokollt ílyen ,,külső szemmel'' megadó függvény az \emph{abszolút protokollfüggvény}.
+
+	\subsection{Relatív protokollfüggvény}
+
+	A $\mainfunA4{-\infty}5$ relatív protokollfüggvényt úgy fogjuk felépíteni, hogy \emph{jóslóerejű} legyen: egyáltalán ($+\infty$), sőt a megadott korlátokon belül is ($2\frac12, 2, 1\frac12, 1, \frac12, 0, -\infty$). Értelmezési tartományát az $\yesmainfunA4{-\infty}5$ \emph{élőségi predikátum} határolja be, ennek ellentéte, logikai negáltja a $\nomainfunA4{-\infty}5$ \emph{lehetetlenségi predikátum}. Értékkészlete Maybe-algebrájú: $\nothing$ mint továbbengedés, vagy azonnali válasz $\just\incl$ és $\just\excl$ lehetőséggel. A protokollfüggvény tulajdonsága, hogy tagjaira szimmetrikus ($0, 1, 2, 3,4$) és rekurziója egyfajta komplementaritásra, illetve annak indeterminizmusára, ,,holtjátékára'' épül ($0 \mapsto 4, 5 \bullet \dots \bullet 4 \mapsto 0, 1$).
+
+	\[\mainfunA4{-\infty}5, \yesmainfunA4{-\infty}5, \nomainfunA4{-\infty}5\]
 
 	\begin{align*}
-		\mainfun0{-\infty}0 &= \nothing \\
-		\mainfun0{-\infty}1 &= \nothing \\
-		\mainfun0{-\infty}2 &= \nothing \\
-		\mainfun0{-\infty}3 &= \nothing \\
-		\mainfun0{-\infty}4 &= \nothing \\
-		\mainfun0{-\infty}5 &= \nothing
+		\mainfunA4{-\infty}0 &= \nothing \\
+		\mainfunA4{-\infty}1 &= \nothing \\
+		\mainfunA4{-\infty}2 &= \nothing \\
+		\mainfunA4{-\infty}3 &= \nothing \\
+		\mainfunA4{-\infty}4 &= \nothing \\
+		\mainfunA4{-\infty}5 &= \nothing
 	\end{align*}
 
 	\begin{align*}
-		\mainfun0{0}0  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}4 = \nothing\\\mainfun2{-\infty}5 = \nothing&\end{cases} \\
-		\mainfun0{0}1  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}3 = \nothing\\\mainfun2{-\infty}4 = \nothing&\end{cases} \\
-		\mainfun0{0}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}2 = \nothing\\\mainfun2{-\infty}3 = \nothing&\end{cases} \\
-		\mainfun0{0}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}1 = \nothing\\\mainfun2{-\infty}2 = \nothing&\end{cases} \\
-		\mainfun0{0}4  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{-\infty}0 = \nothing\\\mainfun2{-\infty}1 = \nothing&\end{cases} \\
-		\mainfun0{0}5  &= \just \incl &&\text{, mert }\begin{cases}\mainfun2{-\infty}0 = \nothing&\text{--- tehát egyértelmű: csak egy eset van}\end{cases}
+		\mainfunA4{0}0  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{-\infty}4 = \nothing\\\mainfunB4{-\infty}5 = \nothing&\end{cases} \\
+		\mainfunA4{0}1  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{-\infty}3 = \nothing\\\mainfunB4{-\infty}4 = \nothing&\end{cases} \\
+		\mainfunA4{0}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{-\infty}2 = \nothing\\\mainfunB4{-\infty}3 = \nothing&\end{cases} \\
+		\mainfunA4{0}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{-\infty}1 = \nothing\\\mainfunB4{-\infty}2 = \nothing&\end{cases} \\
+		\mainfunA4{0}4  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{-\infty}0 = \nothing\\\mainfunB4{-\infty}1 = \nothing&\end{cases} \\
+		\mainfunA4{0}5  &= \just \incl &&\text{, mert }\begin{cases}\mainfunB4{-\infty}0 = \nothing&\text{--- tehát egyértelmű: csak egy eset van}\end{cases}
 	\end{align*}
 
 	\begin{align*}
-		\mainfun0{\frac12}0  &= \just \excl &&\text{, mert }\begin{cases}\mainfun2{0}4 = \nothing\\\mainfun2{0}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
-		\mainfun0{\frac12}1  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{0}3 = \nothing\\\mainfun2{0}4 = \nothing&\end{cases} \\
-		\mainfun0{\frac12}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{0}2 = \nothing\\\mainfun2{0}3 = \nothing&\end{cases} \\
-		\mainfun0{\frac12}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{0}1 = \nothing\\\mainfun2{0}2 = \nothing&\end{cases} \\
-		\mainfun0{\frac12}4  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{0}0 = \nothing\\\mainfun2{0}1 = \nothing&\end{cases} \\
-		\mainfun0{\frac12}5  &= \just \incl &&\text{, mert }\begin{cases}\mainfun2{0}0 = \nothing&\text{--- az egyetlen eset el is jut hozzá: $\angled{\frac12,5}\in\dom\currymainfun0$, azaz $\yesmainfun0{\frac12}5$}\end{cases}
+		\mainfunA4{\frac12}0  &= \just \excl &&\text{, mert }\begin{cases}\mainfunB4{0}4 = \nothing\\\mainfunB4{0}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
+		\mainfunA4{\frac12}1  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{0}3 = \nothing\\\mainfunB4{0}4 = \nothing&\end{cases} \\
+		\mainfunA4{\frac12}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{0}2 = \nothing\\\mainfunB4{0}3 = \nothing&\end{cases} \\
+		\mainfunA4{\frac12}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{0}1 = \nothing\\\mainfunB4{0}2 = \nothing&\end{cases} \\
+		\mainfunA4{\frac12}4  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{0}0 = \nothing\\\mainfunB4{0}1 = \nothing&\end{cases} \\
+		\mainfunA4{\frac12}5  &= \just \incl &&\text{, mert }\begin{cases}\mainfunB4{0}0 = \nothing&\text{--- az egyetlen eset el is jut hozzá: $\angled{\frac12,5}\in\dom\currymainfunA$, azaz $\yesmainfunA4{\frac12}5$}\end{cases}
 	\end{align*}
 
 	\begin{align*}
-		\mainfun010  &= \just \excl &&\text{, mert }\begin{cases}\mainfun2{\frac12}4 = \nothing\\\mainfun2{\frac12}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
-		\mainfun011  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{\frac12}3 = \nothing\\\mainfun2{\frac12}4 = \nothing&\end{cases} \\
-		\mainfun012  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{\frac12}2 = \nothing\\\mainfun2{\frac12}3 = \nothing&\end{cases} \\
-		\mainfun013  &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{\frac12}1 = \nothing\\\mainfun2{\frac12}2 = \nothing&\end{cases} \\
-		\mainfun014  &= \just\incl  &&\text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl\\\mainfun2{\frac12}1 = \nothing&\text{--- nem jut el hozzá}\end{cases} \\%\intertext{\[\storm\]}
-		&\nomainfun015              &&\text{, mert}_{\frac12}\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{1,5}\notin\dom \currymainfun0$}\end{cases}\\
-		&                           &&\text{, mert}_1\mainfun005 = \just\incl\text{ --- alternatív bizonyítás}\\
+		\mainfunA410  &= \just \excl &&\text{, mert }\begin{cases}\mainfunB4{\frac12}4 = \nothing\\\mainfunB4{\frac12}5 = \just \incl&\text{--- így nem jut el hozzá}\end{cases} \\
+		\mainfunA411  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{\frac12}3 = \nothing\\\mainfunB4{\frac12}4 = \nothing&\end{cases} \\
+		\mainfunA412  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{\frac12}2 = \nothing\\\mainfunB4{\frac12}3 = \nothing&\end{cases} \\
+		\mainfunA413  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{\frac12}1 = \nothing\\\mainfunB4{\frac12}2 = \nothing&\end{cases} \\
+		\mainfunA414  &= \just\incl  &&\text{, mert }\begin{cases}\mainfunB4{\frac12}0 = \just\excl\\\mainfunB4{\frac12}1 = \nothing&\text{--- nem jut el hozzá}\end{cases} \\%\intertext{\[\storm\]}
+		&\nomainfunA415              &&\text{, mert}_{\frac12}\begin{cases}\mainfunB4{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{1,5}\notin\dom \currymainfunA$}\end{cases}\\
+		&                           &&\text{, mert}_1\mainfunA405 = \just\incl\text{ --- alternatív bizonyítás}\\
 		&                           &&\text{\hspace{7em}mostantól külön szabály}_1 \text{ az eddigi szabály}_\frac12 \text{mellé}\\
 		\intertext{\vspace{-1em}\[\storm\storm\storm\storm\storm\storm\]}
-		%{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning}\mspace{20mu}\nexists\mainfun015\bigskull\bigskull  & \text{, mert }\begin{cases}\mainfun2{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{\frac12,5}\notin\dom P_0$}\end{cases}
+		%{\mathcloud\mspace{-42mu}\lightning\mspace{3mu}\lightning}\mspace{20mu}\nexists\mainfunA415\bigskull\bigskull  & \text{, mert }\begin{cases}\mainfunB4{\frac12}0 = \just\excl&\text{--- nem jut el hozzá, így $\angled{\frac12,5}\notin\dom P_0$}\end{cases}
 	\end{align*}
 
 	\begin{align*}
-		&\nomainfun0{1\frac12}0              &&\text{, mert}_{\frac12}\begin{cases}\mainfun214 = \just\incl&\text{--- innen már nem juthat el hozzá}\\\nomainfun215&\text{--- ez meg már nincs is a lehetőségek között}\end{cases} \\
-		&                                    &&\text{, mert}_1\mainfun0{\frac12}0 = \just\excl\\
-		\mainfun0{1\frac12}1  &= \just\excl  &&\text{, mert }\begin{cases}\mainfun213 = \nothing\\\mainfun214 = \just\incl&\text{--- innen nem juthat tovább}\end{cases} \\
-		\mainfun0{1\frac12}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfun212 = \nothing\\\mainfun213 = \nothing&\end{cases} \\
-		\mainfun0{1\frac12}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfun211 = \nothing\\\mainfun212 = \nothing&\end{cases} \\
-		\mainfun0{1\frac12}4  &= \just\incl  &&\text{, mert }\begin{cases}\mainfun210 = \just\excl&\text{--- nem jut el hozzá}\\\mainfun211 = \nothing&\end{cases} \\%\intertext{\[\storm\]}
-		&\nomainfun0{1\frac12}5              &&\text{, mert}_{\frac12}\begin{cases}\mainfun210 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
-		&                                    &&\text{, mert}_1 \mainfun0{\frac12}5 = \just\incl
+		&\nomainfunA4{1\frac12}0              &&\text{, mert}_{\frac12}\begin{cases}\mainfunB414 = \just\incl&\text{--- innen már nem juthat el hozzá}\\\nomainfunB415&\text{--- ez meg már nincs is a lehetőségek között}\end{cases} \\
+		&                                    &&\text{, mert}_1\mainfunA4{\frac12}0 = \just\excl\\
+		\mainfunA4{1\frac12}1  &= \just\excl  &&\text{, mert }\begin{cases}\mainfunB413 = \nothing\\\mainfunB414 = \just\incl&\text{--- innen nem juthat tovább}\end{cases} \\
+		\mainfunA4{1\frac12}2  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB412 = \nothing\\\mainfunB413 = \nothing&\end{cases} \\
+		\mainfunA4{1\frac12}3  &= \nothing    &&\text{, mert }\begin{cases}\mainfunB411 = \nothing\\\mainfunB412 = \nothing&\end{cases} \\
+		\mainfunA4{1\frac12}4  &= \just\incl  &&\text{, mert }\begin{cases}\mainfunB410 = \just\excl&\text{--- nem jut el hozzá}\\\mainfunB411 = \nothing&\end{cases} \\%\intertext{\[\storm\]}
+		&\nomainfunA4{1\frac12}5              &&\text{, mert}_{\frac12}\begin{cases}\mainfunB410 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
+		&                                    &&\text{, mert}_1 \mainfunA4{\frac12}5 = \just\incl
 	\end{align*}
 
 	\begin{align*}
-		&\nomainfun020               &&\text{, mert}_\frac12\begin{cases}\mainfun2{1\frac12}4=\just\incl\\\nomainfun2{1\frac12}5\end{cases}\\
-		&                            &&\text{, mert}_1\mainfun010=\just\excl\\
-		\mainfun021   &= \just\excl  &&\text{, mert }\begin{cases}\mainfun2{1\frac12}3 = \nothing\\\mainfun2{1\frac12}4 = \just\incl&\text{--- innen nem juthat tovább}\end{cases}\\
-		\mainfun022   &= \nothing    &&\text{, mert }\begin{cases}\mainfun2{1\frac12}2 = \nothing\\\mainfun2{1\frac12}3 = \nothing&\end{cases}\\
-		\mainfun023   &= \just\incl  &&\text{, mert }\begin{cases}\mainfun2{1\frac12}1 = \just\excl\\\mainfun2{1\frac12}2 = \nothing&\end{cases}\\
-		&\nomainfun024               &&\text{, mert}_\frac12\begin{cases}\nomainfun2{1\frac12}0\\\mainfun2{1\frac12}1 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
-		&                            &&\text{, mert}_1\mainfun014=\just\incl\text{ --- nem jut el hozzá}\\
-		&\nomainfun025               &&\text{, mert}_\frac12\begin{cases}\nomainfun2{1\frac12}0\end{cases}\\
-		&                            &&\text{, mert}_1\nomainfun015
+		&\nomainfunA420               &&\text{, mert}_\frac12\begin{cases}\mainfunB4{1\frac12}4=\just\incl\\\nomainfunB4{1\frac12}5\end{cases}\\
+		&                            &&\text{, mert}_1\mainfunA410=\just\excl\\
+		\mainfunA421   &= \just\excl  &&\text{, mert }\begin{cases}\mainfunB4{1\frac12}3 = \nothing\\\mainfunB4{1\frac12}4 = \just\incl&\text{--- innen nem juthat tovább}\end{cases}\\
+		\mainfunA422   &= \nothing    &&\text{, mert }\begin{cases}\mainfunB4{1\frac12}2 = \nothing\\\mainfunB4{1\frac12}3 = \nothing&\end{cases}\\
+		\mainfunA423   &= \just\incl  &&\text{, mert }\begin{cases}\mainfunB4{1\frac12}1 = \just\excl\\\mainfunB4{1\frac12}2 = \nothing&\end{cases}\\
+		&\nomainfunA424               &&\text{, mert}_\frac12\begin{cases}\nomainfunB4{1\frac12}0\\\mainfunB4{1\frac12}1 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
+		&                            &&\text{, mert}_1\mainfunA414=\just\incl\text{ --- nem jut el hozzá}\\
+		&\nomainfunA425               &&\text{, mert}_\frac12\begin{cases}\nomainfunB4{1\frac12}0\end{cases}\\
+		&                            &&\text{, mert}_1\nomainfunA415
 	\end{align*}
 
 	\begin{align*}
-		&\nomainfun0{2\frac12}0               &&\text{, mert}_\frac12\begin{cases}\nomainfun224\\\nomainfun225\end{cases}\\
-		&                                     &&\text{, mert}_1\nomainfun0{1\frac12}0\\
-		&\nomainfun0{2\frac12}1               &&\text{, mert}_\frac12\begin{cases}\mainfun223 = \just\incl&\text{--- innen nem juthat tovább}\\\nomainfun224\end{cases}\\
-		&                                     &&\text{, mert}_1\mainfun0{1\frac12}1 = \just\excl\\
-		\mainfun0{2\frac12}2   &= \just\excl  &&\text{, mert }\begin{cases}\mainfun222 = \nothing\\\mainfun223 = \just\incl&\text{--- innen nem juthat tovább}\end{cases}\\
-		\mainfun0{2\frac12}3   &= \just\incl  &&\text{, mert }\begin{cases}\mainfun221 = \just\excl&\text{--- innen nem juthat tovább}\\\mainfun222 = \nothing&\end{cases}\\
-		&\nomainfun0{2\frac12}4               &&\text{, mert}_\frac12\begin{cases}\nomainfun220\\\mainfun221 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
-		&                                     &&\text{, mert}_1\mainfun0{1\frac12}4=\just\incl\text{ --- nem jut el hozzá}\\
-		&\nomainfun0{2\frac12}5               &&\text{, mert}_\frac12\begin{cases}\nomainfun220\end{cases}\\
-		&                                     &&\text{, mert}_1\nomainfun0{1\frac12}5
+		&\nomainfunA4{2\frac12}0               &&\text{, mert}_\frac12\begin{cases}\nomainfunB424\\\nomainfunB425\end{cases}\\
+		&                                     &&\text{, mert}_1\nomainfunA4{1\frac12}0\\
+		&\nomainfunA4{2\frac12}1               &&\text{, mert}_\frac12\begin{cases}\mainfunB423 = \just\incl&\text{--- innen nem juthat tovább}\\\nomainfunB424\end{cases}\\
+		&                                     &&\text{, mert}_1\mainfunA4{1\frac12}1 = \just\excl\\
+		\mainfunA4{2\frac12}2   &= \just\excl  &&\text{, mert }\begin{cases}\mainfunB422 = \nothing\\\mainfunB423 = \just\incl&\text{--- innen nem juthat tovább}\end{cases}\\
+		\mainfunA4{2\frac12}3   &= \just\incl  &&\text{, mert }\begin{cases}\mainfunB421 = \just\excl&\text{--- innen nem juthat tovább}\\\mainfunB422 = \nothing&\end{cases}\\
+		&\nomainfunA4{2\frac12}4               &&\text{, mert}_\frac12\begin{cases}\nomainfunB420\\\mainfunB421 = \just\excl&\text{--- nem jut el hozzá}\end{cases}\\
+		&                                     &&\text{, mert}_1\mainfunA4{1\frac12}4=\just\incl\text{ --- nem jut el hozzá}\\
+		&\nomainfunA4{2\frac12}5               &&\text{, mert}_\frac12\begin{cases}\nomainfunB420\end{cases}\\
+		&                                     &&\text{, mert}_1\nomainfunA4{1\frac12}5
 	\end{align*}
 
 	\begin{align*}
-		&\nomainfun030   &&\text{, mert}_\frac12\begin{cases}\nomainfun2{2\frac12}4\\\nomainfun2{2\frac12}5\end{cases}\\
-		&                &&\text{, mert}_1\nomainfun020\\
-		&\nomainfun031   &&\text{, mert}_\frac12\begin{cases}\mainfun2{2\frac12}3 = \just\incl&\text{--- innen nem juthat tovább}\\\nomainfun2{2\frac12}4\end{cases}\\
-		&                &&\text{, mert}_1\mainfun021 = \just\excl\\
-		&\nomainfun032   &&\text{, mert }\begin{cases}\mainfun2{2\frac12}2 = \just\excl&\text{--- innen nem juthat tovább}\\\mainfun2{2\frac12}3 = \just\incl&\text{--- innen sem juthat tovább}\end{cases}\\
-		&\nomainfun033   &&\text{, mert }\begin{cases}\nomainfun2{2\frac12}1\\\mainfun2{2\frac12}2 = \just\excl&\end{cases}\\
-		&\nomainfun034   &&\text{, mert}_\frac12\begin{cases}\nomainfun2{2\frac12}0\\\nomainfun2{2\frac12}1\end{cases}\\
-		&                &&\text{, mert}_1\nomainfun024\\
-		&\nomainfun035   &&\text{, mert}_\frac12\begin{cases}\nomainfun2{2\frac12}0\end{cases}\\
-		&                &&\text{, mert}_1\nomainfun025
+		&\nomainfunA430   &&\text{, mert}_\frac12\begin{cases}\nomainfunB4{2\frac12}4\\\nomainfunB4{2\frac12}5\end{cases}\\
+		&                &&\text{, mert}_1\nomainfunA420\\
+		&\nomainfunA431   &&\text{, mert}_\frac12\begin{cases}\mainfunB4{2\frac12}3 = \just\incl&\text{--- innen nem juthat tovább}\\\nomainfunB4{2\frac12}4\end{cases}\\
+		&                &&\text{, mert}_1\mainfunA421 = \just\excl\\
+		&\nomainfunA432   &&\text{, mert }\begin{cases}\mainfunB4{2\frac12}2 = \just\excl&\text{--- innen nem juthat tovább}\\\mainfunB4{2\frac12}3 = \just\incl&\text{--- innen sem juthat tovább}\end{cases}\\
+		&\nomainfunA433   &&\text{, mert }\begin{cases}\nomainfunB4{2\frac12}1\\\mainfunB4{2\frac12}2 = \just\excl&\end{cases}\\
+		&\nomainfunA434   &&\text{, mert}_\frac12\begin{cases}\nomainfunB4{2\frac12}0\\\nomainfunB4{2\frac12}1\end{cases}\\
+		&                &&\text{, mert}_1\nomainfunA424\\
+		&\nomainfunA435   &&\text{, mert}_\frac12\begin{cases}\nomainfunB4{2\frac12}0\end{cases}\\
+		&                &&\text{, mert}_1\nomainfunA425
 	\end{align*}
 
 
@@ -221,7 +397,7 @@
 	Ezt fejezi ki a leszűkített relatív tábla:
 
 	\begin{table}[H]
-		\caption*{$\currymainfun0$ és $\currymainfun2$ relatív táblázata: a 0-s és a 2-es testvér szerepe szimmetrikus a relatív reprezentációban}
+		\caption*{$\currymainfunA$ és $\currymainfunB$ relatív táblázata: a 0-s és a 2-es testvér szerepe szimmetrikus a relatív reprezentációban}
 		\centering
 		\begin{tabular}{c||c|c|c|c|c|c|c|}
 				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
@@ -243,9 +419,9 @@
 	Az \#1 és \#3 indexű testvér lényegében csak afféle ,,vezeték'' ebben,hogy ez a fajta absztrakció ehetővé váljék, szerepük implicit.
 	Mindenesetre ettől függetlenül nekik is konrét táblát kell adni, sőt, nemcsak az abszolút, hanem már itt a relatív tábla terén is is.
 
-	\subsection{A repeater-szabályok} 
+	\subsection{A repeater-szabályok}
 
-	A ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfun0jn = \nothing$, és $\nomainfun1jn$ ha $\nomainfun0jn \lor \mainfun0jn = \just\incl \lor \mainfun0jn = \just\excl$.
+	A ,,repeater-szabályok'': $\mainfun1jn = \nothing$ ha $\mainfunA Njn = \nothing$, és $\nomainfun1jn$ ha $\nomainfunA Njn \lor \mainfunA jn = \just\incl \lor \mainfunA jn = \just\excl$.
 
 	\begin{table}[H]
 		\caption*{$\currymainfun1$ és $\currymainfun3$ relatív táblázata: a repeater szerep elfogadása esetén}
@@ -272,7 +448,7 @@
 	Valójában persze a repeater-szabáyloknak elég a feladat szempontjából fontos esetekben megvalósulniuk. Azokon a pontokon, amelyek a rekurzív hívásokat nem rontják el érdemben, ott megengedhető a repeater-szabályoktól való eltérés.
 
 	\begin{table}[H]
-		\caption*{A $\currymainfun0$ és $\currymainfun2$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
+		\caption*{A $\currymainfunA$ és $\currymainfunB$ párocska relatív táblázata\\közös táblázatba vehető a $\currymainfun1$ és $\currymainfun3$ párocska relatív táblázatával\\tehát $\currymainfun{*}$ egységes relatív táblázata}
 		\centering
 		\begin{tabular}{c||c|c|c|c|c|c|c|}
 				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
@@ -296,30 +472,60 @@
 		\end{tabular}
 	\end{table}
 
+	\setlength{\extrarowheight}{8px}
+
 	\begin{table}[H]
-		\caption*{Abszolút tábla}
+		\caption*{Abszolút tábla (az $\eye$ abszolút protokollfüggvény)}
 		\centering
 		\begin{tabular}{c|c|c|c|c|c|c|c|}
 			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                           \\
 			                       &                           &    0                         &    1                         &    2                         &    3                         &    4                &    5      \\\hline\hline
-			\multirow{4}{*}{0}     &  0                        &    $\mainfun{*}00$           &    $\mainfun{*}01$           &    $\mainfun{*}02$           &    $\mainfun{*}03$           &    $\mainfun{*}04$          &    $\mainfun{*}05$          \\\cline{2-8}
-			                       &  1                        &    $\mainfun{*}{\frac14}0$   &    $\mainfun{*}{\frac14}1$   &    $\mainfun{*}{\frac14}2$   &    $\mainfun{*}{\frac14}3$   &    $\mainfun{*}{\frac14}4$  &    $\mainfun{*}{\frac14}5$  \\\cline{2-8}
-			                       &  2                        &    $\mainfun{*}{\frac12}0$   &    $\mainfun{*}{\frac12}1$   &    $\mainfun{*}{\frac12}2$   &    $\mainfun{*}{\frac12}3$   &    $\mainfun{*}{\frac12}4$  &    $\mainfun{*}{\frac12}5$  \\\cline{2-8}
-			                       &  3                        &    $\mainfun{*}{\frac34}0$   &    $\mainfun{*}{\frac34}1$   &    $\mainfun{*}{\frac34}2$   &    $\mainfun{*}{\frac34}3$   &    $\mainfun{*}{\frac34}4$  &    $\mainfun{*}{\frac34}5$  \\\hline\hline
-			\multirow{4}{*}{1}     &  0                        &    $\mainfun{*}10$           &    $\mainfun{*}11$           &    $\mainfun{*}12$           &    $\mainfun{*}13$           &    $\mainfun{*}04$          &    $\mainfun{*}05$          \\\cline{2-8}
-			                       &  1                        &    $\mainfun{*}{1\frac14}0$  &    $\mainfun{*}{1\frac14}1$  &    $\mainfun{*}{1\frac14}2$  &    $\mainfun{*}{1\frac14}3$  &    $\mainfun{*}{\frac14}4$  &    $\mainfun{*}{\frac14}5$  \\\cline{2-8}
-			                       &  2                        &    $\mainfun{*}{1\frac12}0$  &    $\mainfun{*}{1\frac12}1$  &    $\mainfun{*}{1\frac12}2$  &    $\mainfun{*}{1\frac12}3$  &    $\mainfun{*}{\frac12}4$  &    $\mainfun{*}{\frac12}5$  \\\cline{2-8}
-			                       &  3                        &    $\mainfun{*}{1\frac34}0$  &    $\mainfun{*}{1\frac34}1$  &    $\mainfun{*}{1\frac34}2$  &    $\mainfun{*}{1\frac34}3$  &    $\mainfun{*}{\frac34}4$  &    $\mainfun{*}{\frac34}5$  \\\hline\hline
-			\multirow{4}{*}{2}     &  0                        &    $\mainfun{*}20$           &    $\mainfun{*}21$           &    $\mainfun{*}22$           &    $\mainfun{*}23$           &    $\mainfun{*}04$          &    $\mainfun{*}05$          \\\cline{2-8}
-			                       &  1                        &    $\mainfun{*}{2\frac14}0$  &    $\mainfun{*}{2\frac14}1$  &    $\mainfun{*}{2\frac14}2$  &    $\mainfun{*}{2\frac14}3$  &    $\mainfun{*}{\frac14}4$  &    $\mainfun{*}{\frac14}5$  \\\cline{2-8}
-			                       &  2                        &    $\mainfun{*}{2\frac12}0$  &    $\mainfun{*}{2\frac12}1$  &    $\mainfun{*}{2\frac12}2$  &    $\mainfun{*}{2\frac12}3$  &    $\mainfun{*}{\frac12}4$  &    $\mainfun{*}{\frac12}5$  \\\cline{2-8}
-			                       &  3                        &    $\mainfun{*}{2\frac34}0$  &    $\mainfun{*}{2\frac34}1$  &    $\mainfun{*}{2\frac34}2$  &    $\mainfun{*}{2\frac34}3$  &    $\mainfun{*}{\frac34}4$  &    $\mainfun{*}{\frac34}5$  \\\hline\hline
-			\multirow{4}{*}{3}     &  0                        &    $\mainfun{*}30$           &    $\mainfun{*}31$           &    $\mainfun{*}32$           &    $\mainfun{*}33$           &    $\mainfun{*}04$          &    $\mainfun{*}05$          \\\cline{2-8}
-			                       &  1                        &    $\mainfun{*}{3\frac14}0$  &    $\mainfun{*}{3\frac14}1$  &    $\mainfun{*}{3\frac14}2$  &    $\mainfun{*}{3\frac14}3$  &    $\mainfun{*}{\frac14}4$  &    $\mainfun{*}{\frac14}5$  \\\cline{2-8}
-			                       &  2                        &    $\mainfun{*}{3\frac12}0$  &    $\mainfun{*}{3\frac12}1$  &    $\mainfun{*}{3\frac12}2$  &    $\mainfun{*}{3\frac12}3$  &    $\mainfun{*}{\frac12}4$  &    $\mainfun{*}{\frac12}5$  \\\cline{2-8}
-			                       &  3                        &    $\mainfun{*}{3\frac34}0$  &    $\mainfun{*}{3\frac34}1$  &    $\mainfun{*}{3\frac34}2$  &    $\mainfun{*}{3\frac34}3$  &    $\mainfun{*}{\frac34}4$  &    $\mainfun{*}{\frac34}5$  \\\hline
+			\multirow{4}{*}{0}     &  0                        &    $\mainfunext400$           &    $\mainfunext401$           &    $\mainfunext402$           &    $\mainfunext403$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
+			                       &  1                        &    $\mainfunext4{\frac14}0$   &    $\mainfunext4{\frac14}1$   &    $\mainfunext4{\frac14}2$   &    $\mainfunext4{\frac14}3$   &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfunext4{\frac12}0$   &    $\mainfunext4{\frac12}1$   &    $\mainfunext4{\frac12}2$   &    $\mainfunext4{\frac12}3$   &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfunext4{\frac34}0$   &    $\mainfunext4{\frac34}1$   &    $\mainfunext4{\frac34}2$   &    $\mainfunext4{\frac34}3$   &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    $\mainfunext410$           &    $\mainfunext411$           &    $\mainfunext412$           &    $\mainfunext413$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
+			                       &  1                        &    $\mainfunext4{1\frac14}0$  &    $\mainfunext4{1\frac14}1$  &    $\mainfunext4{1\frac14}2$  &    $\mainfunext4{1\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfunext4{1\frac12}0$  &    $\mainfunext4{1\frac12}1$  &    $\mainfunext4{1\frac12}2$  &    $\mainfunext4{1\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfunext4{1\frac34}0$  &    $\mainfunext4{1\frac34}1$  &    $\mainfunext4{1\frac34}2$  &    $\mainfunext4{1\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    $\mainfunext420$           &    $\mainfunext421$           &    $\mainfunext422$           &    $\mainfunext423$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
+			                       &  1                        &    $\mainfunext4{2\frac14}0$  &    $\mainfunext4{2\frac14}1$  &    $\mainfunext4{2\frac14}2$  &    $\mainfunext4{2\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfunext4{2\frac12}0$  &    $\mainfunext4{2\frac12}1$  &    $\mainfunext4{2\frac12}2$  &    $\mainfunext4{2\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfunext4{2\frac34}0$  &    $\mainfunext4{2\frac34}1$  &    $\mainfunext4{2\frac34}2$  &    $\mainfunext4{2\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    $\mainfunext430$           &    $\mainfunext431$           &    $\mainfunext432$           &    $\mainfunext433$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
+			                       &  1                        &    $\mainfunext4{3\frac14}0$  &    $\mainfunext4{3\frac14}1$  &    $\mainfunext4{3\frac14}2$  &    $\mainfunext4{3\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfunext4{3\frac12}0$  &    $\mainfunext4{3\frac12}1$  &    $\mainfunext4{3\frac12}2$  &    $\mainfunext4{3\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfunext4{3\frac34}0$  &    $\mainfunext4{3\frac34}1$  &    $\mainfunext4{3\frac34}2$  &    $\mainfunext4{3\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline
 		\end{tabular}
 	\end{table}
+
+	\setlength{\extrarowheight}{4px}
+
+	\begin{table}[H]
+		\caption*{Abszolút tábla}
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
+				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  1                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   \\\cline{2-8}
+				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  3                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw           & \ylw           \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw           & \ylw           & \ylw           & \ylw           & \ylw           & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw           & \ylw           & \ylw           & \ylw           & \ylw           \\\hline
+		\end{tabular}
+	\end{table}
+
 
 	\begin{table}[H]
 		\caption*{Abszolút tábla}
@@ -345,6 +551,8 @@
 				               &  3                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\hline
 		\end{tabular}
 	\end{table}
+
+
 
 	A ,,negyedes'' legények (1, 3) kitöltéskekor érzékeljük, hogy információveszteség történik: nem figyljük, egy-egy legény mennyi bárányt számol az egyik irányban külön és a másik irányban külön.
 	Ez a fajta információvesztés --- ,,a karok vesztesége'' --- a később említendő ,,oprtimalitás tétele'' szempontjából lesz érdekes.
