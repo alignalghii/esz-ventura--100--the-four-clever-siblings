@@ -32,6 +32,7 @@
 \newcommand{\setOf}[1]{\left\lbrace\,#1\,\right\rbrace}
 
 \newcommand{\eye}{\bigtriangleup\mspace{-14.607mu}\divideontimes}
+\newcommand{\eyefun}[4]{\mathop{\eye}^{#1}_{#2,#3}#4}
 
 \newcommand{\mainfun}[3]{\mathwitch_{#1}^{#2}#3}
 \newcommand{\yesmainfun}[3]{\bigpumpkin_{#1}^{#2}#3}
@@ -54,7 +55,7 @@
 
 \newcommand{\mainfuncomm}[3]{\mathwitch_{#2}^{#1}#3}
 \newcommand{\mainfunext}[3]{\left\uparrow\!\!\!\mathwitch*_{#2}^{#1}#3\right.}
-\newcommand{\eyefun}[3]{\eye^{#1}_{#2}#3}
+%\newcommand{\eyefun}[3]{\eye^{#1}_{#2}#3}
 
 \newcommand{\gbh}[3]{\mathop{\mathghost}^{#1}_{#2}#3}
 
@@ -97,13 +98,28 @@
 		Alapkérdés: ,,\textit{[\dots] melyik legény felelt meg, hányadik kérdésre, és mit felelt?}''
 	\end{quotation}
 
-	Válasz: Amennyiben az optimalitási sejtés igaz, akkor: \textbf{a 26.~menetben} fog felelni a \textbf{kezdő testvérrel szemközt álló testvér}, vagyis a harmadik testvér (illetve a végső ,,abszolút protokollfüggvény''-táblázatban használt 0-indexű testvérszámozás szerinti 2.~testvér). Ez mindkét protokollalgoritmus esetén így van, a testvérnégyes mindkét protokollalgoritmus szerint dolgozhatik.
+	Válasz: Amennyiben az optimalitási sejtés igaz, akkor:
+	\begin{itemize}
+		\item A válasz a valóságnak megfelelő helyes válasz lesz: ,,\textit{A királylány nincs a nyájjal}''
+		\item Felelni a \textbf{kezdő testvérrel szemközt álló testvér} fog, vagyis a harmadik testvér (illetve a végső ,,abszolút protokollfüggvény''-táblázatban használt 0-indexű testvérszámozás szerinti 2.~testvér).
+		\item Az \textbf{a 51.~menetben} fog felelni. (Amennyiben a köröket is 0-alapú indexeléssel számítjuk, vagyis a kezdő kör a nulladik, akkor az 50-es indexű körben, ami megegyezik az egy-egy tstvér által megszámolható birkák számával).
+	\end{itemize}
+
+	Mindez mindkét protokollalgoritmus esetén így van, a testvérnégyes mindkét protokollalgoritmus szerint dolgozhatik.
 	
 	\begin{quotation}
 		Haladó kérdés: ,,\textit{Mi lett volna akkor, ha a király nem egyenlően osztja el a bárányokat? Tetszőleges elosztásban is megoldható lett volna a feladat, ha elég okosak a kérők?}''
 	\end{quotation}
 
 	Válasz: Mindkét protokollalgoritmus teljesíti a király által megszabott korlátokat tetszőleg nyájelrendezés és a királylány tetszőleges döntése esetén is.
+
+	Ezek a megoldásválaszok a következőekben leírt összefüggések, függvények és értéktáblázatok alapján olvashatóak ki. A továbbiakban több függvény is ismertetésre fog kerülni:
+	\begin{itemize}
+		\item a $\mainfun Nqk$ \emph{relatív alprotokollfüggvény},
+		\item a $\mainfunext Nqk$ \emph{kiterjesztett relatív protokollfüggvény},
+		\item és végül az $\eyefun Nijk$ \emph{abszolút protokollfüggvény}.
+	\end{itemize}
+	Ezek közül a legutóbbi, tehát az  $\eyefun Nijk$ abszolút protokollfüggvény az, amelynek értéktáblázatából a fenti megoldás kiolvasható.
 
 	\section{Bevezetés}
 
@@ -540,6 +556,348 @@
 
 	\section{Az abszolút protokollfüggvény}
 
+	Hamarosan végre itt az idő a feladat eredeti kérdéseinek megválaszolására. Ehhez viszont jó lenne az eddigieknél sokkal konkrétabban tudnunk a protokollt.
+	Tehát egészen konrétan megmondani névreszólóan minden egyes testvérre, hogy hányadik körben neki éppen milyen választ kell adnia a király kérdésére.
+	Ezt akár szintén táblázatba foglalhatjuk: rendre melyik testvér (testvér sorszáma), hányadik kör, adot számú bárányt látva, pontosan milyen választ adjon.
+	Egy ilyen kézzelfogható, élesben bevethető receptúrát neveznék ,,\emph{abszolút protokollfüggvénynek}'', jelölése pedig az ,,Isten szeme'' szimbólumot ábrázolni próbáló $\eyefun Nqk$ képlet lesz.
+
+	Egy ilyen táblázatot természetesen az alapján a tudás alapján készítünk el, amit eddig sikerült felismernünk a feladat logikájából.
+	Eddigi ismereteink csúcsát legjobban a $\mainfunext Nqk$ kiterjesztett relatív protokollfüggvény (illetve annak értéktáblázata) fogja össze.
+
+	Az $\eyefun4ijk$ abszolút protokollfüggvév származtatása az $\mainfunext 4ijk$ kiterjesztett relatív protokollfüggvényből:
+
+	\setlength{\extrarowheight}{8px}
+
+	\begin{table}[H]
+		\caption*{Leszármaztatási mód}
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                           \\
+			                       &                           &    0                         &    1                         &    2                         &    3                         &    4                &    5      \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    $\mainfunext400$           &    $\mainfunext401$           &    $\mainfunext402$           &    $\mainfunext403$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
+			                       &  1                        &    $\mainfunext4{\frac14}0$   &    $\mainfunext4{\frac14}1$   &    $\mainfunext4{\frac14}2$   &    $\mainfunext4{\frac14}3$   &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfunext4{\frac12}0$   &    $\mainfunext4{\frac12}1$   &    $\mainfunext4{\frac12}2$   &    $\mainfunext4{\frac12}3$   &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfunext4{\frac34}0$   &    $\mainfunext4{\frac34}1$   &    $\mainfunext4{\frac34}2$   &    $\mainfunext4{\frac34}3$   &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    $\mainfunext410$           &    $\mainfunext411$           &    $\mainfunext412$           &    $\mainfunext413$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
+			                       &  1                        &    $\mainfunext4{1\frac14}0$  &    $\mainfunext4{1\frac14}1$  &    $\mainfunext4{1\frac14}2$  &    $\mainfunext4{1\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfunext4{1\frac12}0$  &    $\mainfunext4{1\frac12}1$  &    $\mainfunext4{1\frac12}2$  &    $\mainfunext4{1\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfunext4{1\frac34}0$  &    $\mainfunext4{1\frac34}1$  &    $\mainfunext4{1\frac34}2$  &    $\mainfunext4{1\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    $\mainfunext420$           &    $\mainfunext421$           &    $\mainfunext422$           &    $\mainfunext423$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
+			                       &  1                        &    $\mainfunext4{2\frac14}0$  &    $\mainfunext4{2\frac14}1$  &    $\mainfunext4{2\frac14}2$  &    $\mainfunext4{2\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfunext4{2\frac12}0$  &    $\mainfunext4{2\frac12}1$  &    $\mainfunext4{2\frac12}2$  &    $\mainfunext4{2\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfunext4{2\frac34}0$  &    $\mainfunext4{2\frac34}1$  &    $\mainfunext4{2\frac34}2$  &    $\mainfunext4{2\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    $\mainfunext430$           &    $\mainfunext431$           &    $\mainfunext432$           &    $\mainfunext433$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
+			                       &  1                        &    $\mainfunext4{3\frac14}0$  &    $\mainfunext4{3\frac14}1$  &    $\mainfunext4{3\frac14}2$  &    $\mainfunext4{3\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
+			                       &  2                        &    $\mainfunext4{3\frac12}0$  &    $\mainfunext4{3\frac12}1$  &    $\mainfunext4{3\frac12}2$  &    $\mainfunext4{3\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
+			                       &  3                        &    $\mainfunext4{3\frac34}0$  &    $\mainfunext4{3\frac34}1$  &    $\mainfunext4{3\frac34}2$  &    $\mainfunext4{3\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline
+		\end{tabular}
+	\end{table}
+
+	\setlength{\extrarowheight}{4px}
+
+
+	Mivel relatív protkollfüggvényre kétfajta felépítést is adtunk, mindkettőre rendre nézzük meg, milyen ,,abszolút protokollfüggvény''-értéktábla generálható le belőlük.
+
+	Előszőr a ,,kísértetállomások'' bevezetesén alapuló kitejesztett relatív protokollfüggvényhez tartozó abszolút protokollfüggvényt mutatom meg:
+
+	\begin{table}[H]
+		\caption*{A ,,kísértetállomások'' ötletén alapuló $\mainfunext Nqk$ kiterjesztett relatív protokollfüggvény:}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\ylw		&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		\end{tabular}
+	\end{table}
+
+
+	\begin{table}[H]
+		\caption*{\dots és a hozzá tartozó abszolút protokollfüggvény:}
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
+				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  1                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   \\\cline{2-8}
+				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  3                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw           & \ylw           \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw           & \ylw           & \ylw           & \ylw           & \ylw           & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw           & \ylw           & \ylw           & \ylw           & \ylw           \\\hline
+		\end{tabular}
+	\end{table}
+
+	Ezután nézzük a másik akternatívát: volt egy másik elven alapuló $\mainfunext Nqk$ kiterjesztett relatív protokollfüggvényünk is, amely nem ,,kísértetállomásokkal'', hanem egyfajta ,,egyenrangúsított'' hozadék aktorokkal volt megvalósítva:
+	 
+	\begin{table}[H]
+		\caption*{A ,,egyenrangúsított aktorok'' ötletén alapuló $\mainfunext Nqk$ kiterjesztett relatív protkollfüggvény:}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
+
+
+	\begin{table}[H]
+		\caption*{\dots és a hozzá tartozó abszolút protokollfüggvény:}
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
+				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  1                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  3                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  1                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\hline
+		\end{tabular}
+	\end{table}
+
+	\subsection{A feladadat megoldása, a táblázatok kiolvasása}
+
+	Tehát két változatunk van ilyen közvetlen kérdéseket is megválaszoló ,,abszolút protokollfüggvény'' táblából, de a feladat szempontjából nem nagy a különbsg közöttük, mert a kérdésre ugyanaz a válasz következik mindkét megközelítésből.
+
+	Az rögtön látszik a táblázatokból, hogy a \textbf{kezdő testvérrel szemközti testvér} (a harmadik testvér, azaz a 0-alapú indexelés szerinti 2-es indexű testvér) lesz képes a válasz megadására. A kérdés még az, hogy hányadik körben.
+
+	A táblázat a 4-összlétszámú birkanyájra való egyszerűsített feladatra vonatkozik. A feleat konrét szituációja szerint minden mezőn egyes 1-1-1-1 birka áll, tehát minden egyes testvér 2 birkát tud összeszámolni.
+
+	Mind a két ,,abszolút protokollfüggvény'' értéktába azt mutatja, hgy ekkor a harmadik körben (0-alapú indexelás esetén a 2-es indexű körben) fog felelni a kezdő testvérrel szemközti testvér (tehát szintén a harmadik testvér), válasza pedig (helyesen) az lesz, hogy $\just\excl$, vagyis hogy a királylány nincs a nyájjal, el van kóborolva.
+
+	Az eredeti feladatban persze nem 4, hanem 100 bárány a nyáj összlétszáma, a király szitén homogén módon particionálja a bárányokat ($100 = 25+25+25+25$), tehát minden egye s testvér 50 birkát számolhat meg. A válasz analóg módon az, hogy szintén a kezdőtestvérrel szemközti (haarmadik, 2-es indexű) testvér fog felelni, mégpedig az 51.~körben (azaz 0-alapó indexelés szerinti 50-es indexű körben), a válasza pedig szintén (helyesen) az lesz, $\just\excl$, vagyis hogy a királylány nincs a nyájjal.
+
+	A táblázatból az is látszik, hogy tetszőleges birkaelosztás, birkapartíció esetén van stratégia a helyes válasz megadására, és e válasz mindenkép megadható 51 körben, amely a király feltételének (max 100 kör) bőven megfelel.
+
+	\begin{comment}
+
+	Ilyenfajta, a teendőken egész világosan megmutató táblázatra gondolok:
+
+	\begin{table}[H]
+		\caption*{Abszolút protokollfüggvény értéktáblája 1}
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
+				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  1                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   \\\cline{2-8}
+				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  3                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw           & \ylw           \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \ylw           & \ylw           & \ylw           & \ylw           & \ylw           & \ylw           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \ylw           & \ylw           & \ylw           & \ylw           & \ylw           & \ylw           \\\hline
+		\end{tabular}
+	\end{table}
+
+	Ezt  fajta megadást nevezzük \emph{abszolút protokollfüggvénynek}. Ezt akár konkrétan kézikönyvként is használhatná a testvérnégyes. Az abszolút protokollfügvény felírásmódja rövidrezárja az emergenciákkal és aonóm aktorokkal kapcsolatos kérdéseket: lényegében ,,kézivezérelt'', külső szemszögből részleteiben megadja a teljes rendszer vislekedését: aktoronként előírja, anélkül, hogy valamiféle autonóm aktorok emergenciájával kapcsolatos megfontolásra hivatkoznék.
+
+	Ezt a receptet követve a testvérnégyes biztosan felelni tudni fog a király kérdésére.
+
+	Ez az abszolút protokollfüggvény értéktáblázat persze egy neki megfelelő relatív prtokollfüggvény értéktáblázatból lett leszármaztatva:
+
+	\begin{table}[H]
+		\caption*{A $\mainfunext{}{}{}$ kiterjesztett relatív protokollfüggvény értéktáblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\ylw		&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		\end{tabular}
+	\end{table}
+
+	ezt már láttuk, ez a ,,kísértetállomásos'' változat volt.
+
+	Emlékezzünk, volt egy alternatív másik relatv protokollfüggvény értéktáblázat is, amely nem kísértettállomásokkal, hanem egyenrangú aktorokkal bővítette ki a kétaktoros modellt négyaktorossá. Emlékezzünk: ennek az alábbi volt az értéktáblázata:
+
+	\begin{table}[H]
+		\caption*{Az egymással egyenrangú aktorokkal való kiterjesztés értéktáblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		\end{tabular}
+	\end{table}
+
+	Ehhez is meghatározható egy abszolút protkollfüggvény értéktáblázat:
+
+	\begin{table}[H]
+		\caption*{Abszolút protokollfüggvény értéktáblája 2}
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
+				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  1                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  3                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  1                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\hline
+		\end{tabular}
+	\end{table}
+
+	\end{comment}
+
+	Összefoglalásul: a testvérek megverhetik a királyt, erre van nyerő stratégiájuk, protokolljuk, ím akár kettő több is. Az ehhez szükséges protokollkézikönyveket értéktáblázatára mindkét mutatott ,,abszolút portkollfüggvény értéktáblázat'' jó, az elsőnél a ,,kísértetállomásos'', a második táblázatnál pedig az ,,egyenragú autonóm aktoros'' megközelítés eredményét önti preczen követhető kézikönyv formájába.
+
+	\begin{comment}
+
+	\begin{table}[H]
+		\caption*{A $\mainfunext{}{}{}$ kiterjesztett relatív protokollfüggvény értéktáblázata}
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c|c|}
+				&	$0$		&	$1$		&	$2$		&	$3$		&	$4$		&	$5$		\\\hline\hline
+		$-\infty$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	\\\hline
+			$0$	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+		$\frac12$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	\\\hline
+		$\frac34$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	\\\hline
+			$1$	&	\red\just\excl	&	\nothing	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac14$	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+		$1\frac12$	&	\blk		&	\red\just\excl	&	\nothing	&	\nothing	&	\grn\just\incl	&	\blk		\\\hline
+		$1\frac34$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		\\\hline
+			$2$	&	\blk		&	\red\just\excl	&	\nothing	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac14$	&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+		$2\frac12$	&	\blk		&	\blk		&	\red\just\excl	&	\grn\just\incl	&	\blk		&	\blk		\\\hline
+		$2\frac34$	&	\ylw		&	\ylw		&	\ylw\nothing	&	\ylw\nothing	&	\ylw		&	\ylw		\\\hline
+			$3$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac14$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		$3\frac12$	&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		&	\blk		\\\hline
+		$3\frac34$	&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		&	\ylw		\\\hline
+		\end{tabular}
+	\end{table}
+
+
+	\begin{table}[H]
+		\caption*{Abszolút protokollfüggvény értéktáblája 2}
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c|}
+			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
+				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
+			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  1                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
+				               &  3                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\hline\hline
+			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  1                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\hline\hline
+			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\hline\hline
+			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  1                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
+				               &  3                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\hline
+		\end{tabular}
+	\end{table}
+
+
+
+	Ismerős lehet e két táblázat mintázata: ezek épp a korább tárgyalt kétféle kiterjesztési megközelítésmód eredményezte táblázatok. Az első abszolút táblázat a ,,kísértetállomásos'' , a második abszolút táblázat pedig az ,,egyenrangú aktoros'' kiterjesztésből fakad.
+
+	Tehát az ererdeti relatív protokollfüggvény, ahonnan erednek:
+
+	
+
 
 	\section{Formalizmus}
 
@@ -578,7 +936,7 @@
 
 	A másik két testvér táblázatának kitöltésen nehezebb, hiszen a fentebbi modellek lényegében két kommunikáló félre redukálják a sémát.
 	Az \#1 és \#3 indexű testvér lényegében csak afféle ,,vezeték'' ebben,hogy ez a fajta absztrakció ehetővé váljék, szerepük implicit.
-	Mindenesetre ettől függetlenül nekik is konrét táblát kell adni, sőt, nemcsak az abszolút, hanem már itt a relatív tábla terén is is.
+	Mindenesetre ettől függetlenül nekik is konrét táblát kell adni, sőt, nemcsak az abszolút, hanem már itt a relatív tábla terén is.
 
 	\subsection{A repeater-szabályok}
 
@@ -633,90 +991,14 @@
 		\end{tabular}
 	\end{table}
 
-	\setlength{\extrarowheight}{8px}
 
-	\begin{table}[H]
-		\caption*{Abszolút tábla (az $\eye$ abszolút protokollfüggvény)}
-		\centering
-		\begin{tabular}{c|c|c|c|c|c|c|c|}
-			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                           \\
-			                       &                           &    0                         &    1                         &    2                         &    3                         &    4                &    5      \\\hline\hline
-			\multirow{4}{*}{0}     &  0                        &    $\mainfunext400$           &    $\mainfunext401$           &    $\mainfunext402$           &    $\mainfunext403$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
-			                       &  1                        &    $\mainfunext4{\frac14}0$   &    $\mainfunext4{\frac14}1$   &    $\mainfunext4{\frac14}2$   &    $\mainfunext4{\frac14}3$   &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
-			                       &  2                        &    $\mainfunext4{\frac12}0$   &    $\mainfunext4{\frac12}1$   &    $\mainfunext4{\frac12}2$   &    $\mainfunext4{\frac12}3$   &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
-			                       &  3                        &    $\mainfunext4{\frac34}0$   &    $\mainfunext4{\frac34}1$   &    $\mainfunext4{\frac34}2$   &    $\mainfunext4{\frac34}3$   &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
-			\multirow{4}{*}{1}     &  0                        &    $\mainfunext410$           &    $\mainfunext411$           &    $\mainfunext412$           &    $\mainfunext413$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
-			                       &  1                        &    $\mainfunext4{1\frac14}0$  &    $\mainfunext4{1\frac14}1$  &    $\mainfunext4{1\frac14}2$  &    $\mainfunext4{1\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
-			                       &  2                        &    $\mainfunext4{1\frac12}0$  &    $\mainfunext4{1\frac12}1$  &    $\mainfunext4{1\frac12}2$  &    $\mainfunext4{1\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
-			                       &  3                        &    $\mainfunext4{1\frac34}0$  &    $\mainfunext4{1\frac34}1$  &    $\mainfunext4{1\frac34}2$  &    $\mainfunext4{1\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
-			\multirow{4}{*}{2}     &  0                        &    $\mainfunext420$           &    $\mainfunext421$           &    $\mainfunext422$           &    $\mainfunext423$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
-			                       &  1                        &    $\mainfunext4{2\frac14}0$  &    $\mainfunext4{2\frac14}1$  &    $\mainfunext4{2\frac14}2$  &    $\mainfunext4{2\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
-			                       &  2                        &    $\mainfunext4{2\frac12}0$  &    $\mainfunext4{2\frac12}1$  &    $\mainfunext4{2\frac12}2$  &    $\mainfunext4{2\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
-			                       &  3                        &    $\mainfunext4{2\frac34}0$  &    $\mainfunext4{2\frac34}1$  &    $\mainfunext4{2\frac34}2$  &    $\mainfunext4{2\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline\hline
-			\multirow{4}{*}{3}     &  0                        &    $\mainfunext430$           &    $\mainfunext431$           &    $\mainfunext432$           &    $\mainfunext433$           &    $\mainfunext404$          &    $\mainfunext405$          \\\cline{2-8}
-			                       &  1                        &    $\mainfunext4{3\frac14}0$  &    $\mainfunext4{3\frac14}1$  &    $\mainfunext4{3\frac14}2$  &    $\mainfunext4{3\frac14}3$  &    $\mainfunext4{\frac14}4$  &    $\mainfunext4{\frac14}5$  \\\cline{2-8}
-			                       &  2                        &    $\mainfunext4{3\frac12}0$  &    $\mainfunext4{3\frac12}1$  &    $\mainfunext4{3\frac12}2$  &    $\mainfunext4{3\frac12}3$  &    $\mainfunext4{\frac12}4$  &    $\mainfunext4{\frac12}5$  \\\cline{2-8}
-			                       &  3                        &    $\mainfunext4{3\frac34}0$  &    $\mainfunext4{3\frac34}1$  &    $\mainfunext4{3\frac34}2$  &    $\mainfunext4{3\frac34}3$  &    $\mainfunext4{\frac34}4$  &    $\mainfunext4{\frac34}5$  \\\hline
-		\end{tabular}
-	\end{table}
-
-	\setlength{\extrarowheight}{4px}
-
-	\begin{table}[H]
-		\caption*{Abszolút tábla}
-		\centering
-		\begin{tabular}{c|c|c|c|c|c|c|c|}
-			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
-				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
-			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
-				               &  1                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   \\\cline{2-8}
-				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
-				               &  3                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   \\\hline\hline
-			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
-				               &  1                        &    \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           \\\cline{2-8}
-				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
-				               &  3                        &    \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           \\\hline\hline
-			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
-				               &  1                        &    \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw\nothing   & \ylw           & \ylw           \\\cline{2-8}
-				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
-				               &  3                        &    \ylw           & \ylw           & \ylw\nothing   & \ylw\nothing   & \ylw           & \ylw           \\\hline\hline
-			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
-				               &  1                        &    \ylw           & \ylw           & \ylw           & \ylw           & \ylw           & \ylw           \\\cline{2-8}
-				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
-				               &  3                        &    \ylw           & \ylw           & \ylw           & \ylw           & \ylw           & \ylw           \\\hline
-		\end{tabular}
-	\end{table}
-
-
-	\begin{table}[H]
-		\caption*{Abszolút tábla}
-		\centering
-		\begin{tabular}{c|c|c|c|c|c|c|c|}
-			\multirow{2}{*}{Menet} &  \multirow{2}{*}{Legény}  &    \multicolumn{6}{c|}{Számolható bárányok}                                                          \\
-				               &                           &    0              & 1              & 2              & 3              & 4              & 5              \\\hline\hline
-			\multirow{4}{*}{0}     &  0                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
-				               &  1                        &    \nothing       & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
-				               &  2                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\cline{2-8}
-				               &  3                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \nothing       & \grn\just\incl \\\hline\hline
-			\multirow{4}{*}{1}     &  0                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
-				               &  1                        &    \red\just\excl & \nothing       & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
-				               &  2                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\cline{2-8}
-				               &  3                        &    \blk           & \red\just\excl & \nothing       & \nothing       & \grn\just\incl & \blk           \\\hline\hline
-			\multirow{4}{*}{2}     &  0                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
-				               &  1                        &    \blk           & \red\just\excl & \nothing       & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
-				               &  2                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\cline{2-8}
-				               &  3                        &    \blk           & \blk           & \red\just\excl & \grn\just\incl & \blk           & \blk           \\\hline\hline
-			\multirow{4}{*}{3}     &  0                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
-				               &  1                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
-				               &  2                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\cline{2-8}
-				               &  3                        &    \blk           & \blk           & \blk           & \blk           & \blk           & \blk           \\\hline
-		\end{tabular}
-	\end{table}
 
 
 
 	A ,,negyedes'' legények (1, 3) kitöltéskekor érzékeljük, hogy információveszteség történik: nem figyljük, egy-egy legény mennyi bárányt számol az egyik irányban külön és a másik irányban külön.
 	Ez a fajta információvesztés --- ,,a karok vesztesége'' --- a később említendő ,,oprtimalitás tétele'' szempontjából lesz érdekes.
+
+	\end{comment}
 
 	\section{Tételek és kérdések}
 
@@ -746,6 +1028,7 @@
 
 	Ami viszont innen már a fizika kérdésköreihez is vezethet: emergencia, emergens rendszerek, egyéb önszabályozási kérdések, flock jelenségek. Biológiai és társadalmi példák: tömeg visekledése (diszkótűz, szurkolótömegben hullámok), biológiában a termeszek bárépítő emergenciája jóval egyszerűbb egyéni alkoritmusok alapján, amelyek az egyedekben egységes(ebb)en vannak benne.
 
+	\begin{comment}
 	\section{Abszolút táblák}
 
 	A fenti kérdések megközelítéséhez tovább kell lépnünk a modellezésben: élően meg kell valósítanunk a feladatot.
@@ -825,6 +1108,8 @@
 	\subsection{Rekurziós gráf}
 
 	Szintezettség, hasonló a táblázathoz, de az indeterminisztikus komplementaritás miatt az élek kuszák a szintek között.
+
+	\end{comment}
 
 	\section{Tesztelő keretrendszer aktorszereposztása}
 
