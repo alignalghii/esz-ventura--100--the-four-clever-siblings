@@ -74,6 +74,7 @@
 \usepackage{comment}
 \usepackage{hyperref}
 
+\usepackage{fancyvrb}
 
 \title{Ész Ventura\\100. feladvány\\A négy okos testvér}
 \author{Endrey Márk}
@@ -1122,6 +1123,51 @@
 	\end{comment}
 
 	\section{Tesztelő keretrendszer aktor-szereposztása}
+
+	\subsection{Egyszerű programlehetőségek, létező kód}
+
+	A feladattal kapcsolatban több számítógépes alkalmazás is készíthető. A legkézenfekvőbb az, amely csak teszteléssel foglalkozik: a testvérek által bevetett protkollt ,,leteszteli'':
+	a királlyal legeneráltatja az összes elképzelhető bárány-partíciót, és erre még rá a királylány összes elképzelhető viselkedését, aztán mindezekre lefuttatja a testvérnégyes megadott protokollját.
+
+	Bár nem ilyen teljes kiépítettséggel, de részleges ellenőrzési képességekkel íme az alábbi Haskell-program rendelkezik (\href{https://github.com/alignalghii/esz-ventura--100--the-four-clever-siblings}{LINK a GitHub-repóra}). Ez képes a király és a királylány összes lehetséges szituációját legenerálni (partícióképzés), és képes bizonyos részprotkollok értéktáblázatát legenerálni.
+
+	Néhány jellegzetes algoritmus:
+	\pagebreak
+
+	{\small
+	\begin{Verbatim}[frame=single]
+allPartitions4 :: Int -> [Partition4]
+allPartitions4 n = do
+    a0 <- [0 .. n]
+    a1 <- [0 .. n - a0]
+    a2 <- [0 .. n - a0 - a1]
+    let a3 = n - a0 - a1 - a2
+    return $ P4 a0 a1 a2 a3
+	\end{Verbatim}
+	}
+
+	a lehetséges 4-partíciók generálására,
+
+	{\small
+	\begin{Verbatim}[frame=single]
+relativeWitch :: Int -> Type4 -> Round2      -> Int -> Answer
+relativeWitch    _      _        Preexistent    _   =  Nothing
+relativeWitch    flock  boy   round2         counts
+    | counts == succ flock = Just True
+    | otherwise            = relativeWitch flock (opposite4 boy)
+                                                 (pred round2)
+                                                 (flock - counts)
+                             `combineOpposite`
+                             relativeWitch flock (opposite4 boy)
+                                                 (pred round2) 
+                                                 (flock - counts + 1)
+
+	\end{Verbatim}
+	}
+
+	pedig a relatív protokollfüggvény generálására.
+
+	\subsection{További programozás}
 
 	Van a négy azonos típusú és viselkedésű aktor, akik közös protokollfügyvény szerint viselkednek, és van a király mint egy magasabb szinten vett másik fél.
 
